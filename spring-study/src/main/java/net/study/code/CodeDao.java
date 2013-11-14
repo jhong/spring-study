@@ -47,4 +47,18 @@ public class CodeDao extends SqlMapClientDaoSupport {
 		return list;
 	}
 
+	/**
+	 * <pre>
+	 * 상세 조회
+	 * </pre>
+	 *
+	 * @param condition
+	 * @return CodeVo
+	 */
+	public CodeVo selectDetail(Map condition) throws Exception {
+		CodeVo data = (CodeVo)this.getSqlMapClientTemplate()
+				.queryForObject("common.code.selectDetail", condition);
+		return data;
+	}
+
 }

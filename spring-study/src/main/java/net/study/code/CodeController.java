@@ -31,7 +31,8 @@ public class CodeController {
      * @throws Exception
      */
     @RequestMapping(params="command=viewList")
-	public String viewList (ModelMap model
+	public String viewList (
+			ModelMap model
 			, @RequestParam(value="codecategorykey",required=false) String codecategorykey
 			, @RequestParam(value="code",required=false) String code
 			) throws Exception {
@@ -49,6 +50,33 @@ public class CodeController {
     	model.addAttribute("bizList", result.get("bizList"));
     	
 		return "code/code_list";
+	}
+
+	/**
+	 * <pre>
+	 * 상세조회
+ 	 * </pre>
+	 *
+	 * @param request
+	 * @param model
+	 * @return 
+	 * @throws Exception
+	 */
+    @RequestMapping(params="command=findDetail")
+ 	public String findDetail (
+ 			ModelMap model
+			, @RequestParam(value="codecategorykey",required=false) String codecategorykey
+			, @RequestParam(value="code",required=false) String code
+ 			) throws Exception {
+ 		
+    	Map condition = new HashMap();
+    	condition.put("codecategorykey", codecategorykey);
+    	condition.put("code", code);
+
+    	CodeVo codeVo = facade.findDetail(condition);
+		model.put("codeVo", codeVo);
+		
+		return "code/code_edit";
 	}
 
 }

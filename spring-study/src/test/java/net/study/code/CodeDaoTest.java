@@ -56,4 +56,19 @@ public class CodeDaoTest {
 		logger.info("selectListAll() result={}", result);
 		assertNotNull(result); // smoke test
 	}
+	
+	/**
+	 * selectDetail() test
+	 * @throws Exception
+	 */
+	@Test
+	public void selectDetail() throws Exception {
+		// parameters
+		Map condition = new HashMap();
+		condition.put("codecategorykey", "3039A");
+		condition.put("code", "ANLU");
+	
+		CodeVo result = dao.selectDetail(condition);
+		logger.info("selectDetail() result={}", result);
+	}
 }

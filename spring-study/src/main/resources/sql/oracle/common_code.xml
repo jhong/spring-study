@@ -3,6 +3,16 @@
     "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="common_code">
 
+	<resultMap id="codeVo" class="net.study.code.CodeVo">
+		<result property="codecategorykey" column="CODECATEGORYKEY" />
+		<result property="code" column="CODE" />
+		<result property="codeexplain" column="CODEEXPLAIN" />
+		<result property="codename" column="CODENAME" />
+		<result property="codeengname" column="CODEENGNAME" />
+		<result property="status" column="STATUS" />
+		<result property="sortorder" column="SORTORDER" />
+	</resultMap>
+
 	<select id="common.code.selectListCount" resultClass="int">
 		<![CDATA[
 			SELECT count(*) cnt 
@@ -47,6 +57,22 @@
 					CODECATEGORYKEY, SORTORDER, CODE
 				</isEmpty>
 			</dynamic>
+	</select>
+
+	<select id="common.code.selectDetail" resultMap="codeVo">
+		<![CDATA[
+			SELECT
+				CODECATEGORYKEY
+				, CODE
+				, CODEEXPLAIN
+				, CODENAME
+				, CODEENGNAME
+				, STATUS
+				, SORTORDER
+			FROM CODE 
+		   WHERE CODE = #code#
+   			 AND CODECATEGORYKEY = #codecategorykey# 
+		]]>
 	</select>
 
 </sqlMap>

@@ -37,4 +37,19 @@ public class CodeImpl implements CodeFacade {
         return result;
 	}
 
+	/**
+	 * <pre>
+	 * 상세조회
+	 * </pre>
+	 *
+	 * @param condition
+	 * @return CodeVo
+	 * @throws Exception
+	 */
+	public CodeVo findDetail(Map condition) throws Exception {
+
+    	CodeVo resultVo = dao.selectDetail(condition);
+		return resultVo;
+	}
+
 }

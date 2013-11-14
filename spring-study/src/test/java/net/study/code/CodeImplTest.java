@@ -42,4 +42,20 @@ public class CodeImplTest {
 		logger.info("findList() result.get(\"totalRow\")={}", result.get("totalRow"));
 		logger.info("findList() result.get(\"bizList\")={}", result.get("bizList"));
 	}
+	
+	/**
+	 * findDetail() test
+	 * @throws Exception
+	 */
+	@Test
+	public void findDetail() throws Exception {
+		// parameters
+		Map condition = new HashMap();
+		condition.put("codecategorykey", "3039A");
+		condition.put("code", "ANLU");
+	
+		CodeVo result = impl.findDetail(condition);
+		logger.info("findDetail() result={}", result);
+	}
+
 }

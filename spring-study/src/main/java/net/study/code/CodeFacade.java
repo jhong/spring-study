@@ -15,4 +15,15 @@ public interface CodeFacade {
 	 */
 	Map findList(Map condition) throws Exception;
 
+	/**
+	 * <pre>
+	 * 상세조회
+	 * </pre>
+	 *
+	 * @param condition
+	 * @return CodeVo
+	 * @throws Exception
+	 */
+	CodeVo findDetail(Map condition) throws Exception;
+
 }
