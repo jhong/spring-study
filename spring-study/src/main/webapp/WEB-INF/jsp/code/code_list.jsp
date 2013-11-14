@@ -5,4 +5,8 @@ code_list.jsp
 <%
 String codeName = (String)request.getAttribute("codeName");
 out.print("codeName : "+codeName);
+
+int totalRow = (Integer)request.getAttribute("totalRow");
+out.print("<br/>totalRow : "+totalRow);
+
 %>

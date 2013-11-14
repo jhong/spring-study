@@ -1,5 +1,9 @@
 package net.study.code;
 
+import java.util.Map;
+
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping(value={"/code"})
 public class CodeController {
+
+	@Resource(name = "codeFacade")
+    private CodeFacade facade;
 
     /**
 	 * <pre>
@@ -19,8 +26,11 @@ public class CodeController {
      */
     @RequestMapping(params="command=viewList")
 	public String viewList (ModelMap model) throws Exception {
+    	Map result = facade.findList(null);
+    	
     	model.addAttribute("codeName", "abcde");
-    	// /WEB-INF/jsp/code/code_list.jsp
+    	model.addAttribute("totalRow", result.get("totalRow"));
+    	
 		return "code/code_list";
 	}
 
