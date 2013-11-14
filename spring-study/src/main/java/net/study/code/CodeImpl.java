@@ -1,6 +1,7 @@
 package net.study.code;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -28,10 +29,11 @@ public class CodeImpl implements CodeFacade {
 		int totalRow = dao.selectListCount(condition);
 		
 		// list
-//		List list = dao.selectListCondition(condition);
+		List list = dao.selectListAll(condition);
 		
 		Map result = new HashMap();
 		result.put("totalRow", totalRow);
+		result.put("bizList", list);
         return result;
 	}
 

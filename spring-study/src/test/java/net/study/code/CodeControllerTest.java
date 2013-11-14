@@ -43,6 +43,7 @@ public class CodeControllerTest {
 		// parameters
 		request.setRequestURI("/code.do");
 		request.setParameter("command", "viewList");
+		request.setParameter("codecategorykey", "3039A");
 		
 		ModelAndView mav = new AnnotationMethodHandlerAdapter().handle(request, response, controller);
 		assertThat(mav.getViewName(), is("code/code_list"));

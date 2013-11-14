@@ -4,7 +4,49 @@
 <sqlMap namespace="common_code">
 
 	<select id="common.code.selectListCount" resultClass="int">
-		SELECT count(*) cnt FROM SN_CODE
+		<![CDATA[
+			SELECT count(*) cnt 
+			  FROM CODE
+			 WHERE 1=1
+		]]>
+			<isNotEmpty prepend="AND" property="codecategorykey">
+				CODECATEGORYKEY = #codecategorykey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="code">
+				CODE = #code#
+			</isNotEmpty>
+	</select>
+
+	<select id="common.code.selectList.all" resultClass="java.util.HashMap">
+		<![CDATA[
+			SELECT
+				CODECATEGORYKEY
+				, CODE
+				, CODEEXPLAIN
+				, CODENAME
+				, CODEENGNAME
+				, STATUS
+				, SORTORDER
+			FROM CODE
+			WHERE 1=1
+		]]>
+			<isNotEmpty prepend="AND" property="codecategorykey">
+				CODECATEGORYKEY = #codecategorykey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="code">
+				CODE = #code#
+			</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+				<isNotEmpty property="sortType">
+					$sortType$
+					<isNotEmpty property="sortValue">
+						$sortValue$
+					</isNotEmpty>
+				</isNotEmpty>
+				<isEmpty property="sortType">
+					CODECATEGORYKEY, SORTORDER, CODE
+				</isEmpty>
+			</dynamic>
 	</select>
 
 </sqlMap>

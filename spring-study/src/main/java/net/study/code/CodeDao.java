@@ -1,5 +1,6 @@
 package net.study.code;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -26,9 +27,24 @@ public class CodeDao extends SqlMapClientDaoSupport {
 	 * @return
 	 */
 	public int selectListCount(Map condition) {
-		Integer count = (Integer)this.getSqlMapClientTemplate().queryForObject("common.code.selectListCount", condition);
+		Integer count = (Integer)this.getSqlMapClientTemplate().
+				queryForObject("common.code.selectListCount", condition);
 		
 		return count.intValue();
+	}
+
+	/**
+	 * <pre>
+	 * List 반환
+	 * </pre>
+	 * 
+	 * @param condition
+	 * @return
+	 */
+	public List selectListAll(Map condition) {
+		List list = this.getSqlMapClientTemplate().
+				queryForList("common.code.selectList.all", condition);		
+		return list;
 	}
 
 }
