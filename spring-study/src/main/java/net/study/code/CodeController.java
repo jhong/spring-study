@@ -105,6 +105,7 @@ public class CodeController {
  			
 		CodeVo result = facade.entry(null);
 		model.addAttribute("codeVo", result);
+		model.addAttribute("dbmode", "C"); // 등록
 		
 		return "code/code_edit";
 	}
@@ -122,18 +123,16 @@ public class CodeController {
 	 */
     @RequestMapping(params="command=regist")
 	public String regist (
-			HttpServletRequest request
-			, @ModelAttribute("codeVo") CodeVo codeVo
-			, BindingResult bindingResult 
-			, RedirectAttributes redirectAttributes
+			@ModelAttribute("codeVo") CodeVo codeVo
+			, ModelMap model
 			) throws Exception {    
 
 		
 		// 정보 등록
 		CodeVo bizResult = facade.regist(codeVo, null);
-		redirectAttributes.addFlashAttribute("codeVo", bizResult);
+		model.addAttribute("codeVo", bizResult);
 		
-		return "redirect:/code.do?command=findDetail&codecategorykey="+codeVo.getCodecategorykey()+"&code="+codeVo.getCode();
+		return "code/code_edit";
     }
 
 	/**
@@ -150,8 +149,7 @@ public class CodeController {
 	 */
     @RequestMapping(params="command=modify")
 	public String modify (
-			HttpServletRequest request
-			, @ModelAttribute("codeVo") CodeVo codeVo
+			@ModelAttribute("codeVo") CodeVo codeVo
 			, BindingResult bindingResult
 			, ModelMap model
 			) throws Exception {
@@ -162,36 +160,37 @@ public class CodeController {
 		return "code/code_edit";
     }
     
-//	/**
-//	 * <pre>
-//	 * 코드 삭제
-// 	 * </pre>
-//	 *
-//	 * @param request
-//	 * @param model
-//	 * @return 
-//	 * @throws Exception
-//	 */
-//    @RequestMapping(params="command=delete")
-//	public void delete (
-//			HttpServletRequest request
-//			, HttpServletResponse response
-//			) throws Exception {
-//
-//		String selectedData = request.getParameter("selectedData");
-//		List selList = JSONUtil.jsonArray2List(selectedData);
-//
-//		// 정보 삭제
-//		BizResult bizResult = facade.delete(selList, condition);
-//
-//		String message = bizMessageSource.getBizMessage(bizResult.getMessageCode(), bizResult.getMessageArgs(), BizUtil.getLocale(request));
-//		logger.info("delete() message={}", message);
-//
-//		// 한글깨짐 방지 위해 String return 하지 않고 PrintWriter 이용함
-//		response.setContentType("text/html;charset="+BizConst.ENCODING_DEFAULT);
-//		PrintWriter out = response.getWriter();
-//		out.print(message);
-//		out.close();
-//	}
+	/**
+	 * <pre>
+	 * 코드 삭제
+ 	 * </pre>
+	 *
+	 * @param request
+	 * @param model
+	 * @return 
+	 * @throws Exception
+	 */
+    @RequestMapping(params="command=delete")
+	public String delete (
+			ModelMap model
+			, @RequestParam(value="codecategorykey",required=false) String codecategorykey
+			, @RequestParam(value="code",required=false) String code
+			) throws Exception {
+
+    	Map condition = new HashMap();
+    	condition.put("codecategorykey", codecategorykey);
+    	condition.put("code", code);
+
+		// 정보 삭제
+		int count = facade.delete(condition);
+		
+		// 리턴할 목록 조회
+    	Map result = facade.findList(null);
+    	
+    	model.addAttribute("totalRow", result.get("totalRow"));
+    	model.addAttribute("bizList", result.get("bizList"));
+
+		return "code/code_list";
+	}
 
 }

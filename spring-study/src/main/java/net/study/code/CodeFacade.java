@@ -67,11 +67,10 @@ public interface CodeFacade {
 	 * 코드 삭제
 	 * </pre>
 	 *
-	 * @param selList
 	 * @param condition
 	 * @return 
 	 * @throws Exception
 	 */
-	int delete(List selList, Map condition) throws Exception;
+	int delete(Map condition) throws Exception;
 
 }

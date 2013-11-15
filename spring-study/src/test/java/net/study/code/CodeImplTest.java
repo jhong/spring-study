@@ -122,10 +122,7 @@ public class CodeImplTest {
 		param.put("codecategorykey", "CODECATEGORYKEY");
 		param.put("code", "CODE");
 		
-		List selList = new ArrayList();
-		selList.add(param);
-		
-		int result = impl.delete(selList, null);
+		int result = impl.delete(param);
 	}
 
 }

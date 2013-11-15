@@ -14,8 +14,6 @@ code_list.jsp
 <hr/>
 <%
 String contextPath = request.getContextPath();
-String codeName = (String)request.getAttribute("codeName");
-out.print("codeName : "+codeName);
 
 int totalRow = (Integer)request.getAttribute("totalRow");
 out.print("<br/>totalRow : "+totalRow);
@@ -23,6 +21,7 @@ out.print("<br/>totalRow : "+totalRow);
 List bizList = (List)request.getAttribute("bizList");
 //out.print("<br/>bizList : "+bizList);
 %>
+<a href="<%=contextPath%>/code.do?command=entry">[등록]</a>
 <br/>
 <table border="1">
 	<tr>

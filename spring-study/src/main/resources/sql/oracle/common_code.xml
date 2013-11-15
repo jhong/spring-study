@@ -19,7 +19,7 @@
 		<![CDATA[
 			SELECT count(*) cnt 
 			  FROM CODE
-			 WHERE 1=1
+			 WHERE STATUS = 'Y'
 		]]>
 			<isNotEmpty prepend="AND" property="codecategorykey">
 				CODECATEGORYKEY = #codecategorykey#
@@ -40,7 +40,7 @@
 				, STATUS
 				, SORTORDER
 			FROM CODE
-			WHERE 1=1
+			WHERE STATUS = 'Y'
 		]]>
 			<isNotEmpty prepend="AND" property="codecategorykey">
 				CODECATEGORYKEY = #codecategorykey#
@@ -117,7 +117,7 @@
 	<delete id="common.code.delete" parameterClass="java.util.HashMap">
 		<![CDATA[
 			UPDATE CODE 
-			   SET STATUS = 'DELETE'
+			   SET STATUS = 'N'
 		   WHERE CODE = #code#
    			 AND CODECATEGORYKEY = #codecategorykey#
 		]]>

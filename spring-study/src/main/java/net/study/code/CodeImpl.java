@@ -104,21 +104,14 @@ public class CodeImpl implements CodeFacade {
 	 * 코드 삭제
 	 * </pre>
 	 *
-	 * @param selList
-	 * @param condition
+	 * @param param
 	 * @return BizResult
 	 * @throws Exception
 	 */
-	public int delete(List selList, Map condition) throws Exception {
+	public int delete(Map param) throws Exception {
 		
-		int result = 0;
-		for (int i = 0; i < selList.size(); i++) {
-			Map bizData = (Map)selList.get(i);
-			
-			// 삭제
-			result += dao.delete(bizData);
-		}
-		
+		// 삭제
+		int result = dao.delete(param);
 		return result;
 	}
 
