@@ -34,6 +34,12 @@ public class CodeControllerTest {
     @Autowired
     private CodeController controller;
     
+//    @Autowired
+//    private RequestMappingHandlerAdapter handlerAdapter;
+//
+//    @Autowired
+//    private RequestMappingHandlerMapping handlerMapping;
+    
 	@Before
 	public void setUp() throws Exception {
 		request = new MockHttpServletRequest();
@@ -75,5 +81,47 @@ public class CodeControllerTest {
 		Object codeVo = resultModelMap.get("codeVo");
 		logger.info("findDetail() codeVo={}", codeVo);
 	}
+
+	/**
+	 * entry() test
+	 * @throws Exception
+	 */
+	@Test
+	public void entry() throws Exception {
+		
+		// parameters
+		request.setRequestURI("/code.do");
+		request.setParameter("command", "entry");
+		
+		ModelAndView mav = new AnnotationMethodHandlerAdapter().handle(request, response, controller);
+		assertThat(mav.getViewName(), is("code/code_edit"));
+		
+		Map resultModelMap = mav.getModelMap();
+		Object codeVo = resultModelMap.get("codeVo");
+		logger.debug("entry() codeVo={}", codeVo);
+	}
+
+//	/**
+//	 * regist() test
+//	 * @throws Exception
+//	 */
+//	@Test
+//	public void regist() throws Exception {
+//		
+//		// parameters
+//		request.setRequestURI("/code.do");
+//		request.setParameter("command", "regist");
+//		request.setParameter("codecategorykey", "1");
+//		request.setParameter("code", "1");
+//
+//		request.setAttribute(DispatcherServlet.OUTPUT_FLASH_MAP_ATTRIBUTE, new FlashMap()); // for RedirectAttributes
+//		Object handler = handlerMapping.getHandler(request).getHandler();
+//		ModelAndView mav = handlerAdapter.handle(request, response, handler);
+//		assertThat(mav.getViewName().indexOf("redirect:/code.do?command=findDetail&selected_key="), is(0));
+//
+//		FlashMap resultFlashMap = (FlashMap)request.getAttribute(DispatcherServlet.OUTPUT_FLASH_MAP_ATTRIBUTE);
+//		Object codeVo = resultFlashMap.get("codeVo");
+//		assertNotNull(codeVo);
+//	}
 
 }

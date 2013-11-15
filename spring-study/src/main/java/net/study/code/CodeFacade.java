@@ -1,5 +1,6 @@
 package net.study.code;
 
+import java.util.List;
 import java.util.Map;
 
 public interface CodeFacade {
@@ -25,5 +26,52 @@ public interface CodeFacade {
 	 * @throws Exception
 	 */
 	CodeVo findDetail(Map condition) throws Exception;
+
+	/**
+	 * <pre>
+	 * 코드 등록화면
+	 * </pre>
+	 *
+	 * @param condition
+	 * @return BizResult
+	 * @throws Exception
+	 */
+	CodeVo entry(Map condition) throws Exception;
+
+	/**
+	 * <pre>
+	 * 코드 등록
+	 * </pre>
+	 *
+	 * @param codeVo
+	 * @param condition
+	 * @return
+	 * @throws Exception
+	 */
+	CodeVo regist(CodeVo codeVo, Map condition) throws Exception;
+
+	/**
+	 * <pre>
+	 * 코드 수정
+	 * </pre>
+	 *
+	 * @param codeVo
+	 * @param condition
+	 * @return
+	 * @throws Exception
+	 */
+	CodeVo modify(CodeVo codeVo, Map condition) throws Exception;
+
+	/**
+	 * <pre>
+	 * 코드 삭제
+	 * </pre>
+	 *
+	 * @param selList
+	 * @param condition
+	 * @return 
+	 * @throws Exception
+	 */
+	int delete(List selList, Map condition) throws Exception;
 
 }

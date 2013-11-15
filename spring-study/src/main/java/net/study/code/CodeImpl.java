@@ -52,4 +52,74 @@ public class CodeImpl implements CodeFacade {
 		return resultVo;
 	}
 
+	/**
+	 * <pre>
+	 * 코드 등록화면
+	 * </pre>
+	 *
+	 * @param condition
+	 * @return BizResult
+	 * @throws Exception
+	 */
+	public CodeVo entry(Map condition) throws Exception {
+	
+    	CodeVo codeVo = new CodeVo();
+		return codeVo;
+	}
+
+	/**
+	 * <pre>
+	 * 코드 등록
+	 * </pre>
+	 *
+	 * @param codeVo
+	 * @param condition
+	 * @return BizResult
+	 * @throws Exception
+	 */
+	public CodeVo regist(CodeVo codeVo, Map condition) throws Exception {
+		
+    	dao.insert(codeVo);
+		return codeVo;
+	}
+
+	/**
+	 * <pre>
+	 * 코드 수정
+	 * </pre>
+	 *
+	 * @param codeVo
+	 * @param condition
+	 * @return BizResult
+	 * @throws Exception
+	 */
+	public CodeVo modify(CodeVo codeVo, Map condition) throws Exception {
+		
+		dao.update(codeVo);
+		return codeVo;
+	}
+
+	/**
+	 * <pre>
+	 * 코드 삭제
+	 * </pre>
+	 *
+	 * @param selList
+	 * @param condition
+	 * @return BizResult
+	 * @throws Exception
+	 */
+	public int delete(List selList, Map condition) throws Exception {
+		
+		int result = 0;
+		for (int i = 0; i < selList.size(); i++) {
+			Map bizData = (Map)selList.get(i);
+			
+			// 삭제
+			result += dao.delete(bizData);
+		}
+		
+		return result;
+	}
+
 }

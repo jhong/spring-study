@@ -3,6 +3,8 @@
     "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="common_code">
 
+	<typeAlias alias="codeVo" type="net.study.code.CodeVo"/>
+	
 	<resultMap id="codeVo" class="net.study.code.CodeVo">
 		<result property="codecategorykey" column="CODECATEGORYKEY" />
 		<result property="code" column="CODE" />
@@ -74,5 +76,51 @@
    			 AND CODECATEGORYKEY = #codecategorykey# 
 		]]>
 	</select>
+
+	<insert id="common.code.insert" parameterClass="codeVo">
+		<![CDATA[
+			INSERT INTO CODE (
+				CODECATEGORYKEY
+				, CODE
+				, CODEEXPLAIN
+				, CODENAME
+				, CODEENGNAME
+				, STATUS
+				, SORTORDER
+			) VALUES (
+				#codecategorykey:VARCHAR:NO_ENTRY#
+				, #code:VARCHAR:NO_ENTRY#
+				, #codeexplain:VARCHAR:NO_ENTRY#
+				, #codename:VARCHAR:NO_ENTRY#
+				, #codeengname:VARCHAR:NO_ENTRY#
+				, #status:VARCHAR:NO_ENTRY#
+				, #sortorder:NUMERIC:-999999#
+			)
+		]]>
+	</insert>
+	
+	<update id="common.code.update" parameterClass="codeVo">
+		<![CDATA[
+			UPDATE CODE SET
+				CODECATEGORYKEY = #codecategorykey:VARCHAR:NO_ENTRY#
+				, CODE = #code:VARCHAR:NO_ENTRY#
+				, CODEEXPLAIN = #codeexplain:VARCHAR:NO_ENTRY#
+				, CODENAME = #codename:VARCHAR:NO_ENTRY#
+				, CODEENGNAME = #codeengname:VARCHAR:NO_ENTRY#
+				, STATUS = #status:VARCHAR:NO_ENTRY#
+				, SORTORDER = #sortorder:NUMERIC:-999999#
+		   WHERE CODE = #code#
+   			 AND CODECATEGORYKEY = #codecategorykey#
+		]]>
+	</update>
+	
+	<delete id="common.code.delete" parameterClass="java.util.HashMap">
+		<![CDATA[
+			UPDATE CODE 
+			   SET STATUS = 'DELETE'
+		   WHERE CODE = #code#
+   			 AND CODECATEGORYKEY = #codecategorykey#
+		]]>
+	</delete>
 
 </sqlMap>

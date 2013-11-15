@@ -1,7 +1,9 @@
 package net.study.code;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,4 +73,63 @@ public class CodeDaoTest {
 		CodeVo result = dao.selectDetail(condition);
 		logger.info("selectDetail() result={}", result);
 	}
+	
+	/**
+	 * insert() test
+	 * @throws Exception
+	 */
+	@Test
+	public void insert() throws Exception {
+		// parameters
+		CodeVo vo = new CodeVo();
+		vo.setCodecategorykey("TEST_CATEGORY");
+		vo.setCode("TEST_CODE_1");
+		vo.setCodeexplain("코드설명");
+		vo.setCodename("코드명");
+		vo.setCodeengname("Code Name");
+		vo.setStatus("Y");
+		vo.setSortorder(new BigDecimal(0));
+		
+		int result = dao.insert(vo);
+		logger.debug("insert() result={}", result);
+		assertTrue(true); // smoke test
+	}
+
+	/**
+	 * update() test
+	 * @throws Exception
+	 */
+	@Test
+	public void update() throws Exception {
+		// parameters
+		CodeVo vo = new CodeVo();
+		vo.setCodecategorykey("CODECATEGORYKEY");
+		vo.setCode("CODE");
+		vo.setCodeexplain("CODEEXPLAIN");
+		vo.setCodename("CODENAME");
+		vo.setCodeengname("CODEENGNAME");
+		vo.setStatus("STATU");
+		vo.setSortorder(new BigDecimal(0));
+		
+		int result = dao.update(vo);
+		logger.debug("update() result={}", result);
+		assertTrue(true); // smoke test
+	}
+	
+	/**
+	 * delete() test
+	 * @throws Exception
+	 */
+	@Test
+	public void delete() throws Exception {
+		// parameters
+		Map param = new HashMap();
+		param.put("codecategorykey", "CODECATEGORYKEY");
+		param.put("code", "CODE");
+
+		int result = dao.delete(param);
+		logger.debug("delete() result={}", result);
+		assertTrue(true); // smoke test
+	}
+
 }

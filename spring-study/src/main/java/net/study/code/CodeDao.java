@@ -61,4 +61,47 @@ public class CodeDao extends SqlMapClientDaoSupport {
 		return data;
 	}
 
+	/**
+	 * <pre>
+	 * 코드 등록
+	 * </pre>
+	 *
+	 * @param codeVo
+	 * @return int
+	 * @throws Exception
+	 */
+	public int insert(CodeVo codeVo) throws Exception {
+		Object result = this.getSqlMapClientTemplate().insert("common.code.insert", codeVo);
+		if (result == null) return 0;
+		else return new Integer(result.toString());
+	}
+
+	/**
+	 * <pre>
+	 * 코드 수정
+	 * </pre>
+	 *
+	 * @param codeVo
+	 * @return int
+	 * @throws Exception
+	 */
+	public int update(CodeVo codeVo) throws Exception {
+		int result = (int)this.getSqlMapClientTemplate().update("common.code.update", codeVo);
+		return result;
+	}
+
+	/**
+	 * <pre>
+	 * 코드 삭제
+	 * </pre>
+	 *
+	 * @param param
+	 * @return int
+	 * @throws Exception
+	 */
+	public int delete(Map param) throws Exception {
+		int result = (int)this.getSqlMapClientTemplate().delete("common.code.delete", param);
+		return result;
+	}
+
 }
