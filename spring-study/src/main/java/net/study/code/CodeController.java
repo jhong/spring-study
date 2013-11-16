@@ -55,7 +55,8 @@ public class CodeController {
     	model.addAttribute("totalRow", result.get("totalRow"));
     	model.addAttribute("bizList", result.get("bizList"));
     	
-		return "code/code_list";
+//		return "code/code_list";
+    	return "list/code/code_list.tiles";
 	}
 
 	/**
@@ -82,7 +83,8 @@ public class CodeController {
     	CodeVo codeVo = facade.findDetail(condition);
 		model.put("codeVo", codeVo);
 		
-		return "code/code_edit";
+//		return "code/code_edit";
+		return "edit/code/code_edit.tiles";
 	}
 
 	/**
@@ -106,7 +108,8 @@ public class CodeController {
 		model.addAttribute("codeVo", result);
 		model.addAttribute("dbmode", "C"); // 등록
 		
-		return "code/code_edit";
+//		return "code/code_edit";
+		return "edit/code/code_edit.tiles";
 	}
    
 	/**
@@ -131,7 +134,8 @@ public class CodeController {
 		CodeVo bizResult = facade.regist(codeVo, null);
 		model.addAttribute("codeVo", bizResult);
 		
-		return "code/code_edit";
+//		return "code/code_edit";
+		return "edit/code/code_edit.tiles";
     }
 
 	/**
@@ -156,7 +160,8 @@ public class CodeController {
 		// 정보 수정
     	CodeVo bizResult = facade.modify(codeVo, null);
 
-		return "code/code_edit";
+//		return "code/code_edit";
+    	return "edit/code/code_edit.tiles";
     }
     
 	/**
@@ -189,7 +194,8 @@ public class CodeController {
     	model.addAttribute("totalRow", result.get("totalRow"));
     	model.addAttribute("bizList", result.get("bizList"));
 
-		return "code/code_list";
+//		return "code/code_list";
+    	return "list/code/code_list.tiles";
 	}
 
 }

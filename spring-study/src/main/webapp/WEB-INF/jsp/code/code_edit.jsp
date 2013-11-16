@@ -8,12 +8,6 @@
 <%
 String contextPath = request.getContextPath();
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>코드 상세</title>
-<link rel="stylesheet" type="text/css" href="<%=contextPath%>/common/css/style.css" />
 <script type="text/javascript">
 <!--
 /*
@@ -54,14 +48,7 @@ function goList() {
 
 //-->
 </script>
-</head>
-<body>
-<div class="layout_header">
-code_edit.jsp
-</div>
-<div class="layout_1">
-좌측 메뉴
-</div>
+
 <div class="layout_2">
 <div class="content">
 
@@ -95,6 +82,3 @@ out.print("dbmode="+dbmode+"<br/>codeVo="+codeVo);
 
 </div><!-- // content -->
 </div><!-- // layout_2 -->
-
-</body>
-</html>

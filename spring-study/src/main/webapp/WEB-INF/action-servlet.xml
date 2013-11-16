@@ -9,10 +9,24 @@
 
 	<context:component-scan base-package="net.study"/>
 
+	<!-- tiles -->
+	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>/WEB-INF/jsp/layout/layouts*.xml</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView"/>
+		<property name="order" value="1"/>
+	</bean>
+
 	<!-- Declare a view resolver -->
  	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/jsp/"/>
 		<property name="suffix" value=".jsp"/>
+		<property name="order" value="2"/>
 	</bean>
 
 </beans>
