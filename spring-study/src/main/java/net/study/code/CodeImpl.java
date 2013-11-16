@@ -28,8 +28,14 @@ public class CodeImpl implements CodeFacade {
 		// total count
 		int totalRow = dao.selectListCount(condition);
 		
+		// 페이징 검색조건 없을 경우 처리
+		if (condition == null) condition = new HashMap();
+		if (condition.get("firstRowIndex") == null) condition.put("firstRowIndex", 0);
+		if (condition.get("rowCountPerPage") == null) condition.put("rowCountPerPage", totalRow);
+		
 		// list
-		List list = dao.selectListAll(condition);
+//		List list = dao.selectListAll(condition);		// 전체 목록
+		List list = dao.selectListCondition(condition); // 페이징 적용 목록
 		
 		Map result = new HashMap();
 		result.put("totalRow", totalRow);

@@ -35,6 +35,20 @@ public class CodeDao extends SqlMapClientDaoSupport {
 
 	/**
 	 * <pre>
+	 * List 반환 (페이징 적용)
+	 * </pre>
+	 * 
+	 * @param condition
+	 * @return
+	 */
+	public List selectListCondition(Map condition) {
+		List list = this.getSqlMapClientTemplate().
+				queryForList("common.code.selectList", condition);		
+		return list;
+	}
+
+	/**
+	 * <pre>
 	 * List 반환
 	 * </pre>
 	 * 

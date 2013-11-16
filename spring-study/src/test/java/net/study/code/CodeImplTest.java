@@ -38,7 +38,9 @@ public class CodeImplTest {
 		// parameters
 		Map condition = new HashMap();
 		condition.put("codecategorykey", "3039A");
-		condition.put("code", "ANLU");
+//		condition.put("code", "ANLU");
+		condition.put("firstRowIndex", 0);		// 페이징 위한 검색조건
+		condition.put("rowCountPerPage", 10);	// 페이징 위한 검색조건
 		
 		Map result = impl.findList(condition);
 		assertNotNull(result);

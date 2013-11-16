@@ -1,13 +1,9 @@
 package net.study.code;
 
-import java.io.PrintWriter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +13,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping(value={"/code"})
@@ -42,11 +37,15 @@ public class CodeController {
 			ModelMap model
 			, @RequestParam(value="codecategorykey",required=false) String codecategorykey
 			, @RequestParam(value="code",required=false) String code
+			, @RequestParam(value="firstRowIndex",required=false) Integer firstRowIndex		// 페이징 위한 검색조건
+			, @RequestParam(value="rowCountPerPage",required=false) Integer rowCountPerPage	// 페이징 위한 검색조건
 			) throws Exception {
     	
     	Map condition = new HashMap();
     	condition.put("codecategorykey", codecategorykey);
     	condition.put("code", code);
+    	condition.put("firstRowIndex", firstRowIndex);		// 페이징 위한 검색조건
+    	condition.put("rowCountPerPage", rowCountPerPage);	// 페이징 위한 검색조건
     	logger.info("viewList() condition={}", condition);
     	
     	Map result = facade.findList(condition);

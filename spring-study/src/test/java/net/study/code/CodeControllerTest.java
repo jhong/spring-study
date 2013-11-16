@@ -50,6 +50,8 @@ public class CodeControllerTest {
 		request.setRequestURI("/code.do");
 		request.setParameter("command", "viewList");
 		request.setParameter("codecategorykey", "3039A");
+		request.setParameter("firstRowIndex", "0");		// 페이징 위한 검색조건
+		request.setParameter("rowCountPerPage", "10");	// 페이징 위한 검색조건
 		
 		ModelAndView mav = new AnnotationMethodHandlerAdapter().handle(request, response, controller);
 		assertThat(mav.getViewName(), is("code/code_list"));

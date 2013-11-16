@@ -45,6 +45,23 @@ public class CodeDaoTest {
 	}
 
 	/**
+	 * selectListCondition() test
+	 * @throws Exception
+	 */
+	@Test
+	public void selectListCondition() throws Exception {
+		// parameters
+		Map condition = new HashMap();
+		condition.put("codecategorykey", "3039A");
+		condition.put("firstRowIndex", 0);		// 페이징 위한 검색조건
+		condition.put("rowCountPerPage", 10);	// 페이징 위한 검색조건
+
+		List result = dao.selectListCondition(condition);
+		logger.info("selectListCondition() result={}", result);
+		assertNotNull(result); // smoke test
+	}
+
+	/**
 	 * selectListAll() test
 	 * @throws Exception
 	 */

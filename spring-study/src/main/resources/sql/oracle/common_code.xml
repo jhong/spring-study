@@ -17,7 +17,7 @@
 
 	<select id="common.code.selectListCount" resultClass="int">
 		<![CDATA[
-			SELECT count(*) cnt 
+			SELECT count(*) totcnt 
 			  FROM CODE
 			 WHERE STATUS = 'Y'
 		]]>
@@ -27,6 +27,50 @@
 			<isNotEmpty prepend="AND" property="code">
 				CODE = #code#
 			</isNotEmpty>
+	</select>
+
+	<select id="common.code.selectList" resultClass="java.util.HashMap">
+		<![CDATA[
+			SELECT  *
+			  FROM  (
+			SELECT ROWNUM RNUM, ALL_LIST.*
+			  FROM  (
+			/* 구현 Sql */
+			SELECT
+				CODECATEGORYKEY AS codecategorykey
+				, CODE AS code
+				, CODEEXPLAIN AS codeexplain
+				, CODENAME AS codename
+				, CODEENGNAME AS codeengname
+				, STATUS AS status
+				, SORTORDER AS sortorder
+			FROM CODE
+		   WHERE STATUS = 'Y'
+		]]>
+			<isNotEmpty prepend="AND" property="codecategorykey">
+				CODECATEGORYKEY = #codecategorykey#
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="code">
+				CODE = #code#
+			</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+				<isNotEmpty property="sortType">
+					$sortType$
+					<isNotEmpty property="sortValue">
+						$sortValue$
+					</isNotEmpty>
+				</isNotEmpty>
+				<isEmpty property="sortType">
+					CODECATEGORYKEY, SORTORDER, CODE
+				</isEmpty>
+			</dynamic>
+		<![CDATA[
+			/* 구현 Sql */
+				    ) ALL_LIST
+				    )
+			 WHERE  RNUM  > #firstRowIndex#
+			   AND  RNUM <= #firstRowIndex# + #rowCountPerPage#
+		]]>
 	</select>
 
 	<select id="common.code.selectList.all" resultClass="java.util.HashMap">
