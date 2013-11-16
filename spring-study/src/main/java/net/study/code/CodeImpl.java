@@ -121,4 +121,20 @@ public class CodeImpl implements CodeFacade {
 		return result;
 	}
 
+    /**
+     * <pre>
+     * 코드로 조회하여 코드 및 설명정보 조회
+     * </pre>
+     *
+     * @param condition
+     * @return
+     * @throws Exception
+     */
+    public String getCodeValue(Map condition) throws Exception {
+    	String codename = "";
+    	CodeVo result = dao.selectDetail(condition);
+    	if (result != null) codename = result.getCodename();
+		return codename;
+	}
+
 }

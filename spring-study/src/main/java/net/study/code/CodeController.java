@@ -1,9 +1,12 @@
 package net.study.code;
 
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -196,6 +199,35 @@ public class CodeController {
 
 //		return "code/code_list";
     	return "list/code/code_list.tiles";
+	}
+
+	/**
+	 * <pre>
+	 * 코드로 조회하여 코드 및 설명정보 조회
+	 * </pre>
+	 *
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+    @RequestMapping(params="command=getCodeValue")
+	public void getCodeValue(
+			HttpServletRequest request
+			, HttpServletResponse response
+			) throws Exception {
+    	
+		Map condition = new HashMap();
+		condition.put("codecategorykey", request.getParameter("codecategorykey"));
+		condition.put("code", request.getParameter("code"));
+
+		String bizResult = facade.getCodeValue(condition);
+
+		// 한글깨짐 방지 위해 String return 하지 않고 PrintWriter 이용함
+		response.setContentType("text/html;charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		out.print(bizResult);
+		out.close();
 	}
 
 }

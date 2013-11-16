@@ -148,4 +148,24 @@ public class CodeControllerTest {
 		assertThat(mav.getViewName(), is("code/code_list"));
 	}
 
+	/**
+	 * getCodeValue() test
+	 * @throws Exception
+	 */
+	@Test
+	public void getCodeValue() throws Exception {
+		
+		AnnotationMethodHandlerAdapter handlerAdapter = new AnnotationMethodHandlerAdapter();
+
+		// parameters
+		request.setRequestURI("/code.do");
+		request.setParameter("command", "getCodeValue");
+		request.setParameter("codecategorykey", "3039A");
+		request.setParameter("code", "ANLU");
+
+		handlerAdapter.handle(request, response, controller);
+		logger.info("getCodeValue() response={}", response.getContentAsString());
+
+	}
+
 }

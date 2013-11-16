@@ -127,4 +127,19 @@ public class CodeImplTest {
 		int result = impl.delete(param);
 	}
 
+	/**
+	 * getCodeValue() test
+	 * @throws Exception
+	 */
+	@Test
+	public void getCodeValue() throws Exception {
+		// parameters
+		Map condition = new HashMap();
+		condition.put("codecategorykey", "3039A");
+		condition.put("code", "ANLU");
+	
+		String result = impl.getCodeValue(condition);
+		logger.info("getCodeValue() result={}", result);
+	}
+
 }

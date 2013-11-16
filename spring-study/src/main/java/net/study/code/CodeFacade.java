@@ -1,6 +1,5 @@
 package net.study.code;
 
-import java.util.List;
 import java.util.Map;
 
 public interface CodeFacade {
@@ -72,5 +71,16 @@ public interface CodeFacade {
 	 * @throws Exception
 	 */
 	int delete(Map condition) throws Exception;
+
+	/**
+	 * <pre>
+	 * 코드로 조회하여 코드 및 설명정보 조회
+	 * </pre>
+	 *
+	 * @param condition
+	 * @return
+	 * @throws Exception
+	 */
+	String getCodeValue(Map condition) throws Exception;
 
 }
