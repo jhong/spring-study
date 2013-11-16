@@ -11,6 +11,7 @@ String contextPath = request.getContextPath();
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>코드 목록</title>
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/common/css/style.css" />
 <script type="text/javascript">
 <!--
 /*
@@ -25,9 +26,15 @@ function searchList(){
 </script>
 </head>
 <body>
+<div class="layout_header">
 code_list.jsp
-<a href="<%=contextPath%>/code.do?command=entry">[등록]</a>
-<hr/>
+</div>
+<div class="layout_1">
+좌측 메뉴
+</div>
+<div class="layout_2">
+<div class="content">
+
 <%
 int totalRow = (Integer)request.getAttribute("totalRow");
 //out.print("<br/>totalRow : "+totalRow);
@@ -52,6 +59,10 @@ List bizList = (List)request.getAttribute("bizList");
 </fieldset>
 
 </form>
+
+<div class="btn_container">
+	<a href="<%=contextPath%>/code.do?command=entry">[등록]</a>
+</div>
 <table border="1">
 	<tr>
 		<th>index</th>
@@ -74,6 +85,10 @@ for (int i=0; bizList!=null && i<bizList.size(); i++) {
 }
 %>
 </table>
+
+
+</div><!-- // content -->
+</div><!-- // layout_2 -->
 
 </body>
 </html>

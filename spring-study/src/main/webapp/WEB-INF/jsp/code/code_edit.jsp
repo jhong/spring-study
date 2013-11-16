@@ -5,11 +5,15 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ page import="net.study.code.CodeVo"%>
+<%
+String contextPath = request.getContextPath();
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>코드 상세</title>
+<link rel="stylesheet" type="text/css" href="<%=contextPath%>/common/css/style.css" />
 <script type="text/javascript">
 <!--
 /*
@@ -37,14 +41,31 @@ function doDelete() {
 	form.submit();
 }
 
+/*
+ * 목록으로 이동
+ */
+function goList() {
+
+	var form = document.forms["subForm"];
+	form.command.value = "viewList";
+
+	form.submit();
+}
+
 //-->
 </script>
 </head>
 <body>
+<div class="layout_header">
 code_edit.jsp
-<br/>
+</div>
+<div class="layout_1">
+좌측 메뉴
+</div>
+<div class="layout_2">
+<div class="content">
+
 <%
-String contextPath = request.getContextPath();
 CodeVo codeVo = (CodeVo)request.getAttribute("codeVo");
 String dbmode = (String)request.getAttribute("dbmode");
 out.print("dbmode="+dbmode+"<br/>codeVo="+codeVo);
@@ -66,9 +87,14 @@ out.print("dbmode="+dbmode+"<br/>codeVo="+codeVo);
 </form:form>
 
 <hr/>
-<a href="#" onclick="doRegist();">[저장]</a>
-<a href="#" onclick="doDelete();">[삭제]</a>
-<a href="<%=contextPath%>/code.do?command=viewList">[목록으로]</a>
+<div class="btn_container">
+	<input type="button" value="저장" onclick="doRegist();"/>
+	<input type="button" value="삭제" onclick="doDelete();"/>
+	<input type="button" value="목록으로" onclick="goList();"/>
+</div>
+
+</div><!-- // content -->
+</div><!-- // layout_2 -->
 
 </body>
 </html>
