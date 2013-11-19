@@ -11,7 +11,12 @@ String CONTEXT_PATH = request.getContextPath();
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>목록</title>
 <link rel="stylesheet" type="text/css" href="<%=CONTEXT_PATH%>/common/css/style.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<%=CONTEXT_PATH%>/common/css/jquery-ui-themes-1.9.2/themes/ui-lightness/jquery-ui.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="<%=CONTEXT_PATH%>/common/js/jquery.jqGrid-4.4.1/css/ui.jqgrid.css" />
+
 <script type="text/javascript" src="<%=CONTEXT_PATH%>/common/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="<%=CONTEXT_PATH%>/common/js/jquery.jqGrid-4.4.1/js/i18n/grid.locale-en.js"></script>
+<script type="text/javascript" src="<%=CONTEXT_PATH%>/common/js/jquery.jqGrid-4.4.1/js/jquery.jqGrid.min.js"></script>
 </head>
 <body>
 

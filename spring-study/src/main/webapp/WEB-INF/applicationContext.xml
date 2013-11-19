@@ -9,9 +9,9 @@
 
  	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-		<property name="url" value="jdbc:oracle:thin:@localhost:1521:bizoradv" />
-		<property name="username" value="" />
-		<property name="password" value="" />
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl" />
+		<property name="username" value="biz_trade" />
+		<property name="password" value="ec_1144" />
 		<property name="maxActive" value="5"/>
 		<property name="maxIdle" value="5"/> 
 		<property name="maxWait" value="-1"/> 

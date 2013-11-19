@@ -14,6 +14,8 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
@@ -104,6 +106,45 @@ public class CodeControllerTest {
 		handlerAdapter.handle(request, response, controller);
 		logger.info("findListJson() response={}", response.getContentAsString());
 
+	}
+
+    /**
+     * viewListGrid() test
+     * @throws Exception
+     */
+    @Test
+    public void viewListGrid() throws Exception {
+		// parameters
+		request.setRequestURI("/code.do");
+		request.setParameter("command", "viewListGrid");
+		request.setParameter("codecategorykey", "3039A");
+		request.setParameter("firstRowIndex", "0");		// 페이징 위한 검색조건
+		request.setParameter("rowCountPerPage", "10");	// 페이징 위한 검색조건
+		
+		ModelAndView mav = new AnnotationMethodHandlerAdapter().handle(request, response, controller);
+		assertThat(mav.getViewName(), is("list/code/code_list_grid.tiles"));
+    }
+
+	/**
+	 * findListGrid() test
+	 * @throws Exception
+	 */
+	@Test
+	public void findListGrid() throws Exception {
+		
+		AnnotationMethodHandlerAdapter handlerAdapter = new AnnotationMethodHandlerAdapter();
+        HttpMessageConverter[] messageConverters = {new MappingJacksonHttpMessageConverter()};
+        handlerAdapter.setMessageConverters(messageConverters);
+
+		// parameters
+		request.setRequestURI("/code.do");
+		request.setParameter("command", "findListGrid");
+		request.setParameter("codecategorykey", "3039A");
+		request.setParameter("firstRowIndex", "0");		// 페이징 위한 검색조건
+		request.setParameter("rowCountPerPage", "10");	// 페이징 위한 검색조건
+
+		handlerAdapter.handle(request, response, controller);
+		logger.info("findListGrid() response={}", response.getContentAsString());
 	}
 
 	/**

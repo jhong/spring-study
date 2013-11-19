@@ -41,7 +41,7 @@ function doDelete() {
 function goList() {
 
 	var form = document.forms["subForm"];
-	form.command.value = "viewList";
+	form.command.value = "viewListGrid";
 
 	form.submit();
 }

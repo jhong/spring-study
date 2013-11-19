@@ -24,12 +24,13 @@ public class CodeImpl implements CodeFacade {
 	 * @throws Exception
 	 */
 	public Map findList(Map condition) throws Exception {
+		if (condition == null) condition = new HashMap();
 
 		// total count
 		int totalRow = dao.selectListCount(condition);
+		condition.put("totalRow", totalRow);
 		
 		// 페이징 검색조건 없을 경우 처리
-		if (condition == null) condition = new HashMap();
 		if (condition.get("firstRowIndex") == null) condition.put("firstRowIndex", 0);
 		if (condition.get("rowCountPerPage") == null) condition.put("rowCountPerPage", totalRow);
 		

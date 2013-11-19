@@ -8,8 +8,8 @@ String contextPath = request.getContextPath();
 <hr/>
 <ul>
 	<li><a href="<%=contextPath%>/code.do?command=viewList&firstRowIndex=0&rowCountPerPage=20">기본 목록 (map list)</a></li>
-	<li><a href="<%=contextPath%>/code.do?command=viewListJson&firstRowIndex=0&rowCountPerPage=5">기본 목록 (json list)</a></li>
-	<li></li>
+	<li><a href="<%=contextPath%>/code.do?command=viewListJson&firstRowIndex=0&rowCountPerPage=5">기본 목록 (json list) - ajax 예제 포함</a></li>
+	<li><a href="<%=contextPath%>/code.do?command=viewListGrid">jqGrid 목록</a></li>
 </ul>
 </body>
 </html>

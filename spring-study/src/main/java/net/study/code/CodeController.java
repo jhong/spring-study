@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
+import net.study.common.BizCondition;
+import net.study.common.GridResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping(value={"/code"})
@@ -141,6 +144,86 @@ public class CodeController {
 		PrintWriter out = response.getWriter();
 		out.print(jsonArray.toString());
 		out.close();
+	}
+
+    /**
+	 * <pre>
+	 * 목록 페이지 조회 (jqGrid)
+ 	 * </pre>
+	 *
+     * @param model
+     * @return 
+     * @throws Exception
+     */
+    @RequestMapping(params="command=viewListGrid")
+	public String viewListGrid (
+			HttpServletRequest request
+			, ModelMap model
+			, @RequestParam(value="codecategorykey",required=false) String codecategorykey
+			, @RequestParam(value="code",required=false) String code
+			) throws Exception {
+    	
+    	BizCondition condition = new BizCondition(request);
+    	condition.put("codecategorykey", codecategorykey);
+    	condition.put("code", code);
+    	logger.info("viewListGrid() condition={}", condition);
+    	
+    	model.addAttribute("condition", condition);
+
+    	return "list/code/code_list_grid.tiles";
+	}
+
+    /**
+	 * <pre>
+	 * 목록 조회 (jqGrid)
+ 	 * </pre>
+	 *
+     * @param model
+     * @return 
+     * @throws Exception
+     */
+    @RequestMapping(params="command=findListGrid")
+	public @ResponseBody GridResponse findListGrid (
+			HttpServletRequest request
+			, HttpServletResponse response
+			, ModelMap model
+			, @RequestParam(value="codecategorykey",required=false) String codecategorykey
+			, @RequestParam(value="code",required=false) String code
+			) throws Exception {
+    	
+    	BizCondition condition = new BizCondition(request);
+    	condition.put("codecategorykey", codecategorykey);
+    	condition.put("code", code);
+    	logger.info("findListGrid() condition={}", condition);
+    	
+    	Map result = facade.findList(condition);
+    	model.addAttribute("condition", condition);
+    	
+    	List bizList = (List)result.get("bizList");
+    	return makeGridResponseData(bizList, condition); // grid response
+	}
+
+	/**
+	 * <pre>
+	 * Grid Response 생성
+	 * </pre>
+	 * @param bizResult
+	 * @param condition
+	 * @return
+	 * @throws Exception
+	 */
+	GridResponse makeGridResponseData(List bizList, BizCondition condition) throws Exception {
+        // grid response
+        GridResponse response = new GridResponse();
+        if (bizList != null && bizList.size() > 0)
+        	response.setData(bizList);
+        if (condition != null) {
+	        response.setRecords(String.valueOf(condition.getTotalRow())); // total number of records
+	        response.setPage(String.valueOf(condition.getPage())); // page
+	        response.setTotal(String.valueOf(condition.getTotalPage())); // total pages
+        }
+
+        return response;
 	}
 
 	/**
