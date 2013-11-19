@@ -5,6 +5,9 @@ import static org.junit.Assert.assertThat;
 
 import java.util.Map;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +20,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter;
 
@@ -54,8 +58,53 @@ public class CodeControllerTest {
 		request.setParameter("rowCountPerPage", "10");	// 페이징 위한 검색조건
 		
 		ModelAndView mav = new AnnotationMethodHandlerAdapter().handle(request, response, controller);
-		assertThat(mav.getViewName(), is("code/code_list"));
+		assertThat(mav.getViewName(), is("list/code/code_list.tiles"));
     }
+
+    /**
+     * viewListJson() test
+     * @throws Exception
+     */
+    @Test
+    public void viewListJson() throws Exception {
+		// parameters
+		request.setRequestURI("/code.do");
+		request.setParameter("command", "viewListJson");
+		request.setParameter("codecategorykey", "3039A");
+		request.setParameter("firstRowIndex", "0");		// 페이징 위한 검색조건
+		request.setParameter("rowCountPerPage", "10");	// 페이징 위한 검색조건
+		
+		ModelAndView mav = new AnnotationMethodHandlerAdapter().handle(request, response, controller);
+		assertThat(mav.getViewName(), is("list/code/code_list_json.tiles"));
+		
+		ModelMap modelMap = mav.getModelMap();
+		JSONArray jsonArray = (JSONArray)modelMap.get("bizList");
+		for (int i=0; jsonArray!=null && i<jsonArray.size(); i++) {
+			JSONObject jsonObject = (JSONObject)jsonArray.get(i);
+			logger.info("viewListJson() code={}", jsonObject.get("CODE")+", codename="+jsonObject.get("CODENAME")+", jsonObject="+jsonObject);
+		}
+    }
+
+	/**
+	 * findListJson() test
+	 * @throws Exception
+	 */
+	@Test
+	public void findListJson() throws Exception {
+		
+		AnnotationMethodHandlerAdapter handlerAdapter = new AnnotationMethodHandlerAdapter();
+
+		// parameters
+		request.setRequestURI("/code.do");
+		request.setParameter("command", "findListJson");
+		request.setParameter("codecategorykey", "3039A");
+		request.setParameter("firstRowIndex", "0");		// 페이징 위한 검색조건
+		request.setParameter("rowCountPerPage", "10");	// 페이징 위한 검색조건
+
+		handlerAdapter.handle(request, response, controller);
+		logger.info("findListJson() response={}", response.getContentAsString());
+
+	}
 
 	/**
 	 * findDetail() test
@@ -71,7 +120,7 @@ public class CodeControllerTest {
 		request.setParameter("code", "ANLU");
 		
 		ModelAndView mav = new AnnotationMethodHandlerAdapter().handle(request, response, controller);
-		assertThat(mav.getViewName(), is("code/code_edit"));
+		assertThat(mav.getViewName(), is("edit/code/code_edit.tiles"));
 		
 		Map resultModelMap = mav.getModelMap();
 		Object codeVo = resultModelMap.get("codeVo");
@@ -90,7 +139,7 @@ public class CodeControllerTest {
 		request.setParameter("command", "entry");
 		
 		ModelAndView mav = new AnnotationMethodHandlerAdapter().handle(request, response, controller);
-		assertThat(mav.getViewName(), is("code/code_edit"));
+		assertThat(mav.getViewName(), is("edit/code/code_edit.tiles"));
 		
 		Map resultModelMap = mav.getModelMap();
 		Object codeVo = resultModelMap.get("codeVo");
@@ -111,7 +160,7 @@ public class CodeControllerTest {
 		request.setParameter("code", "1");
 
 		ModelAndView mav = new AnnotationMethodHandlerAdapter().handle(request, response, controller);
-		assertThat(mav.getViewName(), is("code/code_edit"));
+		assertThat(mav.getViewName(), is("edit/code/code_edit.tiles"));
 	}
 
 	/**
@@ -128,7 +177,7 @@ public class CodeControllerTest {
 		request.setParameter("code", "1");
 
 		ModelAndView mav = new AnnotationMethodHandlerAdapter().handle(request, response, controller);
-		assertThat(mav.getViewName(), is("code/code_edit"));
+		assertThat(mav.getViewName(), is("edit/code/code_edit.tiles"));
 	}
 
 	/**
@@ -145,7 +194,7 @@ public class CodeControllerTest {
 		request.setParameter("code", "1");
 
 		ModelAndView mav = new AnnotationMethodHandlerAdapter().handle(request, response, controller);
-		assertThat(mav.getViewName(), is("code/code_list"));
+		assertThat(mav.getViewName(), is("list/code/code_list.tiles"));
 	}
 
 	/**

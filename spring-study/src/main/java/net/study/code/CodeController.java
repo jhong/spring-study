@@ -2,11 +2,14 @@ package net.study.code;
 
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONArray;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +31,7 @@ public class CodeController {
 
     /**
 	 * <pre>
-	 * 목록 페이지 조회
+	 * 목록 페이지 조회 (map list 반환)
  	 * </pre>
 	 *
      * @param model
@@ -62,6 +65,84 @@ public class CodeController {
     	return "list/code/code_list.tiles";
 	}
 
+    /**
+	 * <pre>
+	 * 목록 페이지 조회 (json list 반환)
+ 	 * </pre>
+	 *
+     * @param model
+     * @return 
+     * @throws Exception
+     */
+    @RequestMapping(params="command=viewListJson")
+	public String viewListJson (
+			ModelMap model
+			, @RequestParam(value="codecategorykey",required=false) String codecategorykey
+			, @RequestParam(value="code",required=false) String code
+			, @RequestParam(value="firstRowIndex",required=false) Integer firstRowIndex		// 페이징 위한 검색조건
+			, @RequestParam(value="rowCountPerPage",required=false) Integer rowCountPerPage	// 페이징 위한 검색조건
+			) throws Exception {
+    	
+    	Map condition = new HashMap();
+    	condition.put("codecategorykey", codecategorykey);
+    	condition.put("code", code);
+    	condition.put("firstRowIndex", firstRowIndex);		// 페이징 위한 검색조건
+    	condition.put("rowCountPerPage", rowCountPerPage);	// 페이징 위한 검색조건
+    	logger.info("viewListJson() condition={}", condition);
+    	
+    	Map result = facade.findList(condition);
+    	
+    	model.addAttribute("totalRow", result.get("totalRow"));
+//    	model.addAttribute("bizList", result.get("bizList"));
+    	
+    	List mapList = (List)result.get("bizList");
+    	JSONArray jsonArray = JSONArray.fromObject(mapList); // map list 를 json array로 변환
+    	logger.info("viewListJson() jsonArray={}", jsonArray);
+    	model.addAttribute("bizList", jsonArray);
+    	
+    	return "list/code/code_list_json.tiles";
+	}
+
+    /**
+	 * <pre>
+	 * 목록 조회 (json list string 반환)
+ 	 * </pre>
+	 *
+     * @param model
+     * @return 
+     * @throws Exception
+     */
+    @RequestMapping(params="command=findListJson")
+	public void findListJson (
+			HttpServletRequest request
+			, HttpServletResponse response
+			, @RequestParam(value="codecategorykey",required=false) String codecategorykey
+			, @RequestParam(value="code",required=false) String code
+			, @RequestParam(value="firstRowIndex",required=false) Integer firstRowIndex		// 페이징 위한 검색조건
+			, @RequestParam(value="rowCountPerPage",required=false) Integer rowCountPerPage	// 페이징 위한 검색조건
+			) throws Exception {
+    	
+    	Map condition = new HashMap();
+    	condition.put("codecategorykey", codecategorykey);
+    	condition.put("code", code);
+    	condition.put("firstRowIndex", firstRowIndex);		// 페이징 위한 검색조건
+    	condition.put("rowCountPerPage", rowCountPerPage);	// 페이징 위한 검색조건
+    	logger.info("findListJson() condition={}", condition);
+    	
+    	Map result = facade.findList(condition);
+    	
+    	List mapList = (List)result.get("bizList");
+    	JSONArray jsonArray = JSONArray.fromObject(mapList); // map list 를 json array로 변환
+    	logger.info("findListJson() jsonArray={}", jsonArray);
+    	
+    	
+		// 한글깨짐 방지 위해 String return 하지 않고 PrintWriter 이용함
+		response.setContentType("text/html;charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		out.print(jsonArray.toString());
+		out.close();
+	}
+
 	/**
 	 * <pre>
 	 * 상세조회
@@ -86,7 +167,7 @@ public class CodeController {
     	CodeVo codeVo = facade.findDetail(condition);
 		model.put("codeVo", codeVo);
 		
-//		return "code/code_edit";
+//		return "edit/code/code_edit.tiles";
 		return "edit/code/code_edit.tiles";
 	}
 
@@ -111,7 +192,7 @@ public class CodeController {
 		model.addAttribute("codeVo", result);
 		model.addAttribute("dbmode", "C"); // 등록
 		
-//		return "code/code_edit";
+//		return "edit/code/code_edit.tiles";
 		return "edit/code/code_edit.tiles";
 	}
    
@@ -137,7 +218,7 @@ public class CodeController {
 		CodeVo bizResult = facade.regist(codeVo, null);
 		model.addAttribute("codeVo", bizResult);
 		
-//		return "code/code_edit";
+//		return "edit/code/code_edit.tiles";
 		return "edit/code/code_edit.tiles";
     }
 
@@ -163,7 +244,7 @@ public class CodeController {
 		// 정보 수정
     	CodeVo bizResult = facade.modify(codeVo, null);
 
-//		return "code/code_edit";
+//		return "edit/code/code_edit.tiles";
     	return "edit/code/code_edit.tiles";
     }
     
