@@ -32,6 +32,12 @@ public class CodeController {
 	@Resource(name = "codeFacade")
     private CodeFacade facade;
 
+	/**
+	 * codeValidator
+	 */
+	@Resource(name = "codeValidator")
+	private CodeValidator codeValidator;
+
     /**
 	 * <pre>
 	 * 목록 페이지 조회 (map list 반환)
@@ -293,13 +299,18 @@ public class CodeController {
     @RequestMapping(params="command=regist")
 	public String regist (
 			@ModelAttribute("codeVo") CodeVo codeVo
+			, BindingResult bindingResult 
 			, ModelMap model
 			) throws Exception {    
 
+    	// validation
+		this.codeValidator.validate(codeVo, bindingResult);
+		if (!bindingResult.hasErrors()) {
 		
-		// 정보 등록
-		CodeVo bizResult = facade.regist(codeVo, null);
-		model.addAttribute("codeVo", bizResult);
+			// 정보 등록
+			CodeVo bizResult = facade.regist(codeVo, null);
+			model.addAttribute("codeVo", bizResult);
+		}
 		
 //		return "edit/code/code_edit.tiles";
 		return "edit/code/code_edit.tiles";
@@ -324,8 +335,13 @@ public class CodeController {
 			, ModelMap model
 			) throws Exception {
 		
-		// 정보 수정
-    	CodeVo bizResult = facade.modify(codeVo, null);
+    	// validation
+		this.codeValidator.validate(codeVo, bindingResult);
+		if (!bindingResult.hasErrors()) {
+			
+			// 정보 수정
+	    	CodeVo bizResult = facade.modify(codeVo, null);
+		}
 
 //		return "edit/code/code_edit.tiles";
     	return "edit/code/code_edit.tiles";

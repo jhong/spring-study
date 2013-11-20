@@ -63,12 +63,12 @@ out.print("dbmode="+dbmode+"<br/>codeVo="+codeVo);
 <input type="hidden" name="dbmode" value="<%=dbmode%>"/>
 
 <ul>
-	<li>codecategorykey : <form:input path="codecategorykey" /></li>
-	<li>code : <form:input path="code" /></li>
-	<li>codeexplain : <form:input path="codeexplain" size="50"/></li>
-	<li>codename : <form:input path="codename" size="50"/></li>
-	<li>codeengname : <form:input path="codeengname" size="50"/></li>
-	<li>status : <form:input path="status" /></li>
+	<li>codecategorykey : <form:input path="codecategorykey" /><form:errors path="codecategorykey" id="" name="codecategorykey.errors" cssClass="err"/></li>
+	<li>code : <form:input path="code" /><form:errors path="code" id="" name="code.errors" cssClass="err"/></li>
+	<li>codeexplain : <form:input path="codeexplain" size="50"/><form:errors path="codeexplain" id="" name="codeexplain.errors" cssClass="err"/></li>
+	<li>codename : <form:input path="codename" size="50"/><form:errors path="codename" id="" name="codename.errors" cssClass="err"/></li>
+	<li>codeengname : <form:input path="codeengname" size="50"/><form:errors path="codeengname" id="" name="codeengname.errors" cssClass="err"/></li>
+	<li>status : <form:input path="status" /><form:errors path="status" id="" name="status.errors" cssClass="err"/></li>
 </ul>
 
 </form:form>
@@ -82,3 +82,42 @@ out.print("dbmode="+dbmode+"<br/>codeVo="+codeVo);
 
 </div><!-- // content -->
 </div><!-- // layout_2 -->
+
+<script type="text/javascript">
+<!--
+/*
+ * jquery validation rules
+ */
+$(document).ready(function() {
+	var validatorSubForm = $("#subForm").validate({
+		onfocusout: function(elmt) { $(elmt).valid(); },
+		errorElement: "span",
+		errorClass: "err",
+		/*
+		errorPlacement: function(error, elmt) {
+			// 서버단 검증 메시지 삭제
+			var errContainer = elmt.parent().next();
+			var errObj = errContainer.children("span.err");
+			errObj.remove();
+			
+			// 화면단 검증 메시지 보여주기
+			error.appendTo(errContainer);
+		},
+		*/
+		success: function(label) {
+			label.removeClass("err");
+		},
+		rules: {
+			codecategorykey: { required:true, maxlength:128 },
+			code: { required:true, maxlength:64 },
+			codeexplain: { maxlength:128 },
+			codename: { required:true, maxlength:128 },
+			codeengname: { maxlength:128 },
+			status: { required:true, maxlength:5 },
+			sortorder: { maxlength:25, number:true }
+		}
+	});
+});
+
+//-->
+</script>

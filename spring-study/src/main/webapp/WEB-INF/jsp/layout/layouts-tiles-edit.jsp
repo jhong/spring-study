@@ -11,6 +11,8 @@ String CONTEXT_PATH = request.getContextPath();
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>상세</title>
 <link rel="stylesheet" type="text/css" href="<%=CONTEXT_PATH%>/common/css/style.css" />
+<script type="text/javascript" src="<%=CONTEXT_PATH%>/common/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="<%=CONTEXT_PATH%>/common/js/jquery-validation-1.9.0/jquery.validate.js"></script>
 </head>
 <body>
 
