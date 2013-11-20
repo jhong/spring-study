@@ -394,4 +394,21 @@ public class CodeController {
 		out.close();
 	}
 
+    /**
+	 * <pre>
+	 * messages
+ 	 * </pre>
+	 *
+     * @param model
+     * @return 
+     * @throws Exception
+     */
+    @RequestMapping(params="command=viewMsg")
+	public String viewMsg (
+			ModelMap model
+			) throws Exception {
+    	
+    	return "/sample/messages_test.jsp";
+	}
+
 }

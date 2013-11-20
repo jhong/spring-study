@@ -258,4 +258,18 @@ public class CodeControllerTest {
 
 	}
 
+    /**
+     * viewMsg() test
+     * @throws Exception
+     */
+    @Test
+    public void viewMsg() throws Exception {
+		// parameters
+		request.setRequestURI("/code.do");
+		request.setParameter("command", "viewMsg");
+		
+		ModelAndView mav = new AnnotationMethodHandlerAdapter().handle(request, response, controller);
+		assertThat(mav.getViewName(), is("/sample/messages_test.jsp"));
+    }
+
 }

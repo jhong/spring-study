@@ -6,10 +6,16 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import net.study.common.Properties;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service("codeFacade")
 public class CodeImpl implements CodeFacade {
+
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Resource(name="codeDao")
     private CodeDao dao;
@@ -31,8 +37,19 @@ public class CodeImpl implements CodeFacade {
 		condition.put("totalRow", totalRow);
 		
 		// 페이징 검색조건 없을 경우 처리
-		if (condition.get("firstRowIndex") == null) condition.put("firstRowIndex", 0);
-		if (condition.get("rowCountPerPage") == null) condition.put("rowCountPerPage", totalRow);
+		if (condition.get("firstRowIndex") == null) {
+//			condition.put("firstRowIndex", 0);
+			
+			int defaultFirstRowIndex = Properties.getInt("condition.firstRowIndex");
+			logger.info("findList() defaultFirstRowIndex={}", defaultFirstRowIndex);
+			condition.put("firstRowIndex", defaultFirstRowIndex);
+		}
+		if (condition.get("rowCountPerPage") == null) {
+//			condition.put("rowCountPerPage", totalRow);
+			int defaultRowCountPerPage = Properties.getInt("condition.rowCountPerPage");
+			logger.info("findList() defaultRowCountPerPage={}", defaultRowCountPerPage);
+			condition.put("rowCountPerPage", defaultRowCountPerPage);
+		}
 		
 		// list
 //		List list = dao.selectListAll(condition);		// 전체 목록
