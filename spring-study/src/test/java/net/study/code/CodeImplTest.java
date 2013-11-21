@@ -3,10 +3,11 @@ package net.study.code;
 import static org.junit.Assert.assertNotNull;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import net.study.common.BizCondition;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -140,6 +141,20 @@ public class CodeImplTest {
 	
 		String result = impl.getCodeValue(condition);
 		logger.info("getCodeValue() result={}", result);
+	}
+
+	/**
+	 * findListExcel() test
+	 * @throws Exception
+	 */
+	@Test
+	public void findListExcel() throws Exception {
+		// parameters
+		BizCondition condition = new BizCondition();
+		condition.put("codecategorykey", "3039A");
+		
+		List result = impl.findListExcel(condition);
+		assertNotNull(result); // smoke test
 	}
 
 }

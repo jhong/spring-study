@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import net.study.common.BizCondition;
 import net.study.common.Properties;
 
 import org.slf4j.Logger;
@@ -153,6 +154,25 @@ public class CodeImpl implements CodeFacade {
     	CodeVo result = dao.selectDetail(condition);
     	if (result != null) codename = result.getCodename();
 		return codename;
+	}
+
+	/**
+	 * <pre>
+	 * ì½ë EXCEL 목록 조회
+	 * </pre>
+	 *
+	 * @param condition
+	 * @return list
+	 * @throws Exception
+	 */
+	public List findListExcel(BizCondition condition) throws Exception {
+
+		// list
+		List list = dao.selectListAll(condition);
+		condition.setTotalRow(list == null ? 0 : list.size());
+		logger.info("findListExcel() condition={}", condition);
+		
+        return list;
 	}
 
 }

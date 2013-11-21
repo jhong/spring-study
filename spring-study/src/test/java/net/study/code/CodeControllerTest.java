@@ -2,6 +2,7 @@ package net.study.code;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+import static org.springframework.test.web.ModelAndViewAssert.assertViewName;
 
 import java.util.Map;
 
@@ -271,5 +272,21 @@ public class CodeControllerTest {
 		ModelAndView mav = new AnnotationMethodHandlerAdapter().handle(request, response, controller);
 		assertThat(mav.getViewName(), is("/sample/messages_test.jsp"));
     }
+
+	/**
+	 * excelDownload() test
+	 * @throws Exception
+	 */
+	@Test
+	public void excelDownload() throws Exception {
+		// parameters
+		request.setRequestURI("/code.do");
+		request.setParameter("command", "excelDownload");
+		request.addHeader("User-Agent", "Mozilla");
+		
+		ModelAndView mav = new AnnotationMethodHandlerAdapter().handle(request, response, controller);
+		assertViewName(mav, "codeExcelView");
+		logger.info("mav.getView()={}", mav.getView());
+	}
 
 }

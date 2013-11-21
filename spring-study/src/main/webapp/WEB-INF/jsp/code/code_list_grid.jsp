@@ -15,6 +15,16 @@ function searchList(){
 	form.command.value = "viewList";
 	form.submit();
 }
+
+/*
+ * 엑셀 다운로드
+ */
+function downloadExcel(){
+	var form = document.forms["listForm"];
+	form.command.value = "excelDownload";
+	form.submit();
+}
+
 //-->
 </script>
 <div class="layout_2">
@@ -39,6 +49,7 @@ function searchList(){
 
 <div class="btn_container">
 	<a href="<%=contextPath%>/code.do?command=entry">[등록]</a>
+	<a href="#" onclick="downloadExcel()">[엑셀 다운로드]</a>
 </div>
 
 <div>

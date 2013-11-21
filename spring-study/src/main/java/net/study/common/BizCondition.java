@@ -847,7 +847,7 @@ public class BizCondition extends WeakHashMap {
 	 */
 	public int getRowCountPerPage() {
 		Object obj = this.get(NAME_ROW_COUNT_PER_PAGE);
-		if (obj == null) {
+		if (obj == null || StringUtil.isEmpty(obj+"")) {
 			this.put(NAME_ROW_COUNT_PER_PAGE, "10"); // default value = 10
 			obj = 10;
 		}

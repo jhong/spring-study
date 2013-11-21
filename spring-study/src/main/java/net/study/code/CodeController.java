@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping(value={"/code"})
@@ -425,6 +426,43 @@ public class CodeController {
 			) throws Exception {
     	
     	return "/sample/messages_test.jsp";
+	}
+
+    /**
+	 * <pre>
+	 * 엑셀 다운로드
+ 	 * </pre>
+	 *
+     * @param request
+     * @param response
+     * @param model
+     * @return 
+     * @throws Exception
+     */
+    @RequestMapping(params="command=excelDownload")
+	public ModelAndView excelDownload (
+			HttpServletRequest request
+			, HttpServletResponse response
+			, @RequestParam(value="codecategorykey",required=false) String codecategorykey
+			, @RequestParam(value="code",required=false) String code
+			, ModelMap model
+			) throws Exception {
+
+		BizCondition condition = new BizCondition(request);
+    	condition.put("codecategorykey", codecategorykey);
+    	condition.put("code", code);
+
+    	List bizResult = facade.findListExcel(condition);
+        
+    	Map<String, Object> result = new HashMap<String, Object>();
+    	result.put("resultList", bizResult);
+		
+    	String contentType = "application/excel";
+    	String filename = "code_list.xls";
+		response.setContentType(contentType);
+		response.setHeader("Content-Disposition", "attachment; filename=\""+filename+"\"");
+
+        return new ModelAndView("codeExcelView", result);
 	}
 
 }

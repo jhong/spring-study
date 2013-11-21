@@ -1,6 +1,9 @@
 package net.study.code;
 
+import java.util.List;
 import java.util.Map;
+
+import net.study.common.BizCondition;
 
 public interface CodeFacade {
 
@@ -82,5 +85,16 @@ public interface CodeFacade {
 	 * @throws Exception
 	 */
 	String getCodeValue(Map condition) throws Exception;
+
+	/**
+	 * <pre>
+	 * EXCEL 목록 조회
+	 * </pre>
+	 *
+	 * @param condition
+	 * @return List
+	 * @throws Exception
+	 */
+	List findListExcel(BizCondition condition) throws Exception;
 
 }
