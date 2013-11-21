@@ -167,4 +167,20 @@
 		]]>
 	</delete>
 
+	<select id="common.code.selectDetail.xml" resultClass="xml" xmlResultName="CODE">
+		<![CDATA[
+			SELECT
+				CODECATEGORYKEY
+				, CODE
+				, CODEEXPLAIN
+				, CODENAME
+				, CODEENGNAME
+				, STATUS
+				, SORTORDER
+			FROM CODE 
+		   WHERE CODE = #code#
+   			 AND CODECATEGORYKEY = #codecategorykey# 
+		]]>
+	</select>
+
 </sqlMap>

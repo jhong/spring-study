@@ -2,13 +2,25 @@ package net.study.code;
 
 import static org.junit.Assert.assertNotNull;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.study.common.BizCondition;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamSource;
 
+import net.study.common.BizCondition;
+import net.study.common.Properties;
+import net.study.util.DateUtil;
+import net.study.util.StringUtil;
+
+import org.dom4j.Document;
+import org.dom4j.io.DocumentResult;
+import org.dom4j.io.DocumentSource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -18,6 +30,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ResourceUtils;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration( locations = { "classpath*:test/*Context.xml" } )
@@ -155,6 +168,60 @@ public class CodeImplTest {
 		
 		List result = impl.findListExcel(condition);
 		assertNotNull(result); // smoke test
+	}
+
+	/**
+	 * findDetailXml() test
+	 * @throws Exception
+	 */
+	@Test
+	public void findDetailXml() throws Exception {
+		// parameters
+		BizCondition condition = new BizCondition();
+		condition.put("codecategorykey", "3039A");
+		condition.put("code", "ANLU");
+
+		Document result = impl.findDetailXml(condition);
+		logger.debug("selectDetailXml() result={}", result==null ? "" : result.asXML());
+	}
+
+	/**
+	 * printHtml() test
+	 * @throws Exception
+	 */
+	@Test
+	public void printHtml() throws Exception {
+
+		BizCondition condition = new BizCondition();
+		condition.put("codecategorykey", "3039A");
+		condition.put("code", "ANLU");
+
+		Document document = impl.findDetailXml(condition);
+		if (document == null) {
+			logger.warn("document is null... stop test...");
+			return;
+		}
+		logger.info("printHtml() document={}", document.asXML());
+		
+		// html 만드는 xslt 파일 준비
+		String xsltFilePath = Properties.get("path.report.xsl")+"CODE.xsl";
+		File file = ResourceUtils.getFile(xsltFilePath);
+		StreamSource xsl = new StreamSource(file);
+		
+		// html 생성
+		TransformerFactory factory = TransformerFactory.newInstance();
+		Transformer transformer = factory.newTransformer(xsl);
+		DocumentSource source = new DocumentSource(document);
+        DocumentResult result = new DocumentResult();
+        transformer.transform(source, result);
+        String htmlSource = result.getDocument().asXML();
+        logger.info("printHtml() htmlSource={}", htmlSource);
+        
+        if (StringUtil.isNotEmpty(htmlSource)) {
+			FileOutputStream out = new FileOutputStream(Properties.get("test.excel.upload.path")+"/CODE_"+DateUtil.getNowMillTime()+".html");
+			out.write(htmlSource.getBytes());
+			out.close();
+        }
 	}
 
 }

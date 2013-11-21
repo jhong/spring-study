@@ -46,6 +46,17 @@ function goList() {
 	form.submit();
 }
 
+/*
+ * 인쇄
+ */
+function doPrint() {
+
+	var form = document.forms["subForm"];
+	form.command.value = "report";
+	form.target = "new_browser";
+	form.submit();
+}
+
 //-->
 </script>
 
@@ -78,6 +89,7 @@ out.print("dbmode="+dbmode+"<br/>codeVo="+codeVo);
 	<input type="button" value="저장" onclick="doRegist();"/>
 	<input type="button" value="삭제" onclick="doDelete();"/>
 	<input type="button" value="목록으로" onclick="goList();"/>
+	<input type="button" value="인쇄" onclick="doPrint();"/>
 </div>
 
 </div><!-- // content -->

@@ -8,7 +8,10 @@ import javax.annotation.Resource;
 
 import net.study.common.BizCondition;
 import net.study.common.Properties;
+import net.study.util.StringUtil;
 
+import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -158,7 +161,7 @@ public class CodeImpl implements CodeFacade {
 
 	/**
 	 * <pre>
-	 * ì½ë EXCEL 목록 조회
+	 * EXCEL 목록 조회
 	 * </pre>
 	 *
 	 * @param condition
@@ -173,6 +176,30 @@ public class CodeImpl implements CodeFacade {
 		logger.info("findListExcel() condition={}", condition);
 		
         return list;
+	}
+
+	/**
+	 * <pre>
+	 * 상세조회 (XML)
+	 * </pre>
+	 *
+	 * @param condition
+	 * @return BizResult
+	 * @throws Exception
+	 */
+	public Document findDetailXml(BizCondition condition) throws Exception {
+		Map param = new HashMap();
+		param.put("codecategorykey", condition.get("codecategorykey"));
+		param.put("code", condition.get("code"));
+
+		// xml string 조회 및 Document 생성
+		Document root = null;
+    	String xmlStr = dao.selectDetailXml(param);
+     	if (StringUtil.isNotEmpty(xmlStr)) {
+			root = DocumentHelper.parseText(xmlStr);
+    	}
+    	
+		return root;
 	}
 
 }

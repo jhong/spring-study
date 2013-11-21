@@ -289,4 +289,26 @@ public class CodeControllerTest {
 		logger.info("mav.getView()={}", mav.getView());
 	}
 
+	/**
+	 * report() test
+	 * @throws Exception
+	 */
+	@Test
+	public void report() throws Exception {
+		
+		// parameters
+		request.addHeader("User-Agent", "Mozilla");
+		request.setRequestURI("/code.do");
+		request.setParameter("command", "report");
+		request.setParameter("codecategorykey", "3039A");
+		request.setParameter("code", "ANLU");
+		
+		ModelAndView mav = new AnnotationMethodHandlerAdapter().handle(request, response, controller);
+		assertThat(mav.getViewName(), is("common/print_body")); // 공통
+		
+		Map resultModelMap = mav.getModelMap();
+		String xsltFilePath = (String)resultModelMap.get("xsltFilePath");
+		logger.debug("report() xsltFilePath={}", xsltFilePath);
+	}
+
 }

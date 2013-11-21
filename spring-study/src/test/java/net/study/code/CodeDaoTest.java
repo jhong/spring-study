@@ -149,4 +149,19 @@ public class CodeDaoTest {
 		assertTrue(true); // smoke test
 	}
 
+	/**
+	 * selectDetailXml() test
+	 * @throws Exception
+	 */
+	@Test
+	public void selectDetailXml() throws Exception {
+		// parameters
+		Map param = new HashMap();
+		param.put("codecategorykey", "3039A");
+		param.put("code", "ANLU");
+
+		String result = dao.selectDetailXml(param);
+		logger.debug("selectDetailXml() result={}", result);
+	}
+
 }

@@ -1,6 +1,8 @@
 package net.study.code;
 
+import java.io.File;
 import java.io.PrintWriter;
+import java.io.StringReader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,15 +10,22 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 
 import net.sf.json.JSONArray;
 import net.study.common.BizCondition;
 import net.study.common.GridResponse;
+import net.study.common.Properties;
 
+import org.dom4j.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.ResourceUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -463,6 +472,67 @@ public class CodeController {
 		response.setHeader("Content-Disposition", "attachment; filename=\""+filename+"\"");
 
         return new ModelAndView("codeExcelView", result);
+	}
+
+	/**
+	 * <pre>
+	 * 인쇄 화면
+ 	 * </pre>
+	 *
+	 * @param request
+	 * @param model
+	 * @return 
+	 * @throws Exception
+	 */
+    @RequestMapping(params="command=report")
+ 	public String report (
+ 			HttpServletRequest request
+ 			, HttpServletResponse response
+			, @RequestParam(value="codecategorykey",required=false) String codecategorykey
+			, @RequestParam(value="code",required=false) String code
+ 			, ModelMap model
+ 			) throws Exception {
+ 		
+ 		BizCondition condition = new BizCondition(request);
+    	condition.put("codecategorykey", codecategorykey);
+    	condition.put("code", code);
+ 		
+		String xsltFilePath = Properties.get("path.report.xsl")+"CODE.xsl"; // XML 파일명 대문자임!!
+    	String fileName = "code";
+
+    	Document root = facade.findDetailXml(condition);
+		printHtml(response, root, xsltFilePath);
+		
+		return "common/print_body";
+	}
+
+	/**
+	 * <pre>
+	 * html report 출력
+	 * </pre>
+	 * 
+	 * @param response
+	 * @param document
+	 * @param xsltFilePath
+	 * @throws Exception
+	 */
+	void printHtml(HttpServletResponse response, Document document, String xsltFilePath) throws Exception {
+
+		if (document == null) return;
+		String xmlStr = (document.asXML());
+
+		response.setContentType("text/html;charset=UTF-8");
+		response.setHeader("Content-Type", "text/html");
+
+		File file = ResourceUtils.getFile(xsltFilePath);
+		StreamSource xsl = new StreamSource(file);
+		StreamSource xml = new StreamSource(new StringReader(xmlStr));
+
+		StreamResult streamResult = new StreamResult(response.getWriter());
+
+		TransformerFactory factory = TransformerFactory.newInstance();
+		Transformer transformer = factory.newTransformer(xsl);
+		transformer.transform(xml, streamResult);
 	}
 
 }

@@ -5,6 +5,8 @@ import java.util.Map;
 
 import net.study.common.BizCondition;
 
+import org.dom4j.Document;
+
 public interface CodeFacade {
 
 	/**
@@ -96,5 +98,16 @@ public interface CodeFacade {
 	 * @throws Exception
 	 */
 	List findListExcel(BizCondition condition) throws Exception;
+
+	/**
+	 * <pre>
+	 * 상세조회 (XML)
+	 * </pre>
+	 *
+	 * @param condition
+	 * @return Document
+	 * @throws Exception
+	 */
+	Document findDetailXml(BizCondition condition) throws Exception;
 
 }

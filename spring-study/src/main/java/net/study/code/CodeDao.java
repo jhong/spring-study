@@ -118,4 +118,18 @@ public class CodeDao extends SqlMapClientDaoSupport {
 		return result;
 	}
 
+	/**
+	 * <pre>
+	 * 코드 상세항목 조회 (XML)
+	 * </pre>
+	 *
+	 * @param param
+	 * @return String
+	 */
+	public String selectDetailXml(Map param) throws Exception {
+		String data = (String)this.getSqlMapClientTemplate()
+				.queryForObject("common.code.selectDetail.xml", param);
+		return data;
+	}
+
 }
