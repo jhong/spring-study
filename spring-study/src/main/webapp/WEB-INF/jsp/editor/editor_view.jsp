@@ -56,7 +56,7 @@ function goList() {
 		</colgroup>
 		<tbody>
 		<tr>
-			<th scope="row" class="ln_r lft"><label for="bbskey">BBSKEY</label></th>
+			<th scope="row" class="ln_r lft"><label>BBSKEY</label></th>
 			<td class="lft">
 				<div class="errdv1_l">
 					<%=form.getBbskey()%>
@@ -64,7 +64,7 @@ function goList() {
 			</td>
 		</tr>
 		<tr>
-			<th scope="row" class="ln_r lft"><label for="title">TITLE</label></th>
+			<th scope="row" class="ln_r lft"><label>TITLE</label></th>
 			<td class="lft">
 				<div class="errdv1_l">
 					<%=form.getTitle()%>
@@ -72,7 +72,7 @@ function goList() {
 			</td>
 		</tr>
 		<tr>
-			<th scope="row" class="ln_r lft"><label for="contents">CONTENTS</label></th>
+			<th scope="row" class="ln_r lft"><label>CONTENTS</label></th>
 			<td class="lft" style="background-color:white;">
 				<div class="errdv1_l">
 					<%=form.getContents()%>

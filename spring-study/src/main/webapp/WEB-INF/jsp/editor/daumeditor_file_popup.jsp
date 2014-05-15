@@ -19,12 +19,13 @@ BizCondition condition = (BizCondition)request.getAttribute("condition");
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <title>Daum에디터 - 파일 첨부</title> 
+<script type="text/javascript" src="<%=request.getContextPath()%>/common/js/jquery-1.7.2.min.js"></script>
 <script src="<%=request.getContextPath()%>/common/js/daumeditor/js/popup.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/common/css/style.css" />
 <link rel="stylesheet" href="<%=request.getContextPath()%>/common/js/daumeditor/css/popup.css" type="text/css"  charset="utf-8"/>
 <script type="text/javascript">
-// <![CDATA[
 
 <%
 if (form != null) {
@@ -72,6 +73,7 @@ function initUploader(){
 <form:form commandName="attachVo" id="subForm" name="subForm" method="post" action="${pageContext.request.contextPath}/attach.do" enctype="multipart/form-data">
 <input type="hidden" name="command" value="registDaum"/>
 <input type="hidden" name="dbmode" value="<%=condition.get("dbmode")%>"/>
+<input type="hidden" name="attachType" value="<%=condition.get("attachType")%>"/>
 
 <div class="bd_wrap">
 	<table class="view" summary="">

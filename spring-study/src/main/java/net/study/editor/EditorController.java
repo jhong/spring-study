@@ -146,6 +146,7 @@ public class EditorController {
 		String viewName = "edit/editor/editor_edit.tiles";
 		if (StringUtil.isNotEmpty(editorType)) {
 			if ("daumeditor".equals(editorType)) viewName = "edit/editor/editor_edit_daumeditor.tiles";
+			if ("smarteditor".equals(editorType)) viewName = "edit/editor/editor_edit_smarteditor.tiles";
 		}
 		return viewName;
 	}
@@ -189,7 +190,13 @@ public class EditorController {
 					viewName = "blank/editor/daumeditor_file_popup.tiles";
 				}
 			}
+			if ("smarteditor".equals(editorType)) {
+				if ("image".equals(attachType)) {
+					viewName = "blank/editor/smarteditor_image_popup.tiles";
+				}
+			}
 		}
+		logger.info("attachPopup() editorType={}", editorType+", attachType="+attachType+", viewName="+viewName);
 		return viewName;
 	}
 
@@ -271,6 +278,7 @@ public class EditorController {
 		String viewName = "edit/editor/editor_edit.tiles";
 		if (StringUtil.isNotEmpty(editorType)) {
 			if ("daumeditor".equals(editorType)) viewName = "edit/editor/editor_edit_daumeditor.tiles";
+			if ("smarteditor".equals(editorType)) viewName = "edit/editor/editor_edit_smarteditor.tiles";
 		}
 		return viewName;
     }
@@ -336,6 +344,7 @@ public class EditorController {
 		String viewName = "edit/editor/editor_edit.tiles";
 		if (StringUtil.isNotEmpty(editorType)) {
 			if ("daumeditor".equals(editorType)) viewName = "edit/editor/editor_edit_daumeditor.tiles";
+			if ("smarteditor".equals(editorType)) viewName = "edit/editor/editor_edit_smarteditor.tiles";
 		}
 		return viewName;
 	}

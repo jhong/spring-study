@@ -239,6 +239,7 @@ public class AttachController {
 			, @ModelAttribute("attachVo") AttachVo attachVo
 			, BindingResult bindingResult 
 			, ModelMap model
+ 			, @RequestParam(value="attachType",required=false) String attachType
 			) throws Exception {    
 
 		BizCondition condition = new BizCondition(request);
@@ -284,7 +285,82 @@ public class AttachController {
 		model.addAttribute("attachVo", bizResult.getBizData());
 		
 		//return "/WEB-INF/jsp/editor/daumeditor_file_popup.jsp";
-		return  "blank/editor/daumeditor_file_popup.tiles";
+		//return  "blank/editor/daumeditor_file_popup.tiles";
+		
+		String viewName = "blank/editor/daumeditor_file_popup.tiles";
+		if ("image".equals(attachType)) {
+			viewName = "blank/editor/daumeditor_image_popup.tiles";
+			
+		} else if ("file".equals(attachType)) {
+			viewName = "blank/editor/daumeditor_file_popup.tiles";
+		}
+		return viewName;
+    }
+
+	/**
+	 * <pre>
+	 * 첨부파일 등록 (스마트에디터 등록시 사용)
+ 	 * </pre>
+	 *
+	 * @param request
+	 * @param attachVo
+	 * @param bindingResult
+	 * @return 
+	 * @throws Exception
+	 */
+    @RequestMapping(params="command=registSmart")
+	public String registSmart (
+			HttpServletRequest request
+			, @ModelAttribute("attachVo") AttachVo attachVo
+			, BindingResult bindingResult 
+			, ModelMap model
+ 			, @RequestParam(value="callback_func",required=false) String callbackFunction
+			) throws Exception {    
+
+		BizCondition condition = new BizCondition(request);
+		condition.put("callback_func", callbackFunction);
+		
+		attachVo = facade.prepareData(attachVo); // validation 전에 수행!!
+		
+		// 정보 등록
+		MultipartHttpServletRequest multiPart = (MultipartHttpServletRequest)request;
+		Iterator itr = multiPart.getFileNames();
+
+		BizResult bizResult = new BizResult();
+		while (itr.hasNext()) {
+			MultipartFile formFile = multiPart.getFile((String)itr.next());
+			if (formFile.getSize() > 0) {
+				AttachVo file = new AttachVo();
+				
+				// 화면에서 filekey 넘어오면 그대로 사용하도록 수정 by jhong (2013.04.22) - TODO: filekey 중복 체크...
+				if (StringUtil.isNotEmpty(request.getParameter("filekey")))
+					file.setFilekey(request.getParameter("filekey"));
+				else
+					file.setFilekey(UUID.randomUUID().toString());
+				
+				file.setFilename(formFile.getOriginalFilename());
+				file.setMimetype(formFile.getContentType());
+				file.setFilesize(new BigDecimal(formFile.getSize()));
+				file.setFiledesc(request.getParameter("filedesc"));
+
+				// 파일저장
+				this.facade.uploadFile(formFile, file);
+
+				// 파일첨부정보 등록
+				bizResult = facade.regist(file, condition);
+
+				condition.setString("filekey", file.getFilekey());
+			}
+		}
+
+
+		model.addAttribute("bizMessage", bizResult.getMessage());
+		model.addAttribute("bizMessageCode", bizResult.getMessageCode());
+
+		model.addAttribute("condition", condition); // 검색조건 유지
+		model.addAttribute("attachVo", bizResult.getBizData());
+		
+		return  "blank/editor/smarteditor_image_callback.tiles";
     }
 
 	/**

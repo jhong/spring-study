@@ -87,6 +87,7 @@ function goList() {
 <input type="hidden" name="dbmode" value="<%=condition.get("dbmode")%>"/>
 <input type="hidden" name="editorType" value="<%=condition.get("editorType")%>"/>
 <form:hidden path="bbskey"/>
+<form:hidden path="bbstype" value="N"/>
 <form:hidden path="status" value="USE"/>
 <form:hidden path="contents"/>
 <form:hidden path="attachstr"/>
@@ -104,17 +105,6 @@ function goList() {
 			<col width="82%"/>
 		</colgroup>
 		<tbody>
-		<tr>
-			<th scope="row" class="ln_r lft"><label for="bbstype">BBSTYPE</label></th>
-			<td class="lft">
-				<div class="errdv1_l">
-					<form:input path="bbstype" value="N" cssErrorClass="type_text err" class="type_text" size="5" maxlength="5"/>
-				</div>
-				<div class="errdv1_r">
-					<form:errors path="bbstype" id="" name="bbstype.errors" cssClass="err" delimiter="</span><span name='bbstype.errors' class='err'>"/>
-				</div>
-			</td>
-		</tr>
 		<tr>
 			<th scope="row" class="ln_r lft"><label for="title">TITLE</label></th>
 			<td class="lft">

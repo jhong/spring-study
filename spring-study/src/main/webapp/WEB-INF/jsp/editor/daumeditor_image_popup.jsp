@@ -1,8 +1,5 @@
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="net.study.common.BizCondition" %>
-<%@ page import="net.study.common.BizConst" %>
-<%@ page import="net.study.editor.EditorVo"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -21,10 +18,11 @@ BizCondition condition = (BizCondition)request.getAttribute("condition");
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <title>Daum에디터 - 이미지 첨부</title> 
+<script type="text/javascript" src="<%=request.getContextPath()%>/common/js/jquery-1.7.2.min.js"></script>
 <script src="<%=request.getContextPath()%>/common/js/daumeditor/js/popup.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/common/css/style.css" />
 <link rel="stylesheet" href="<%=request.getContextPath()%>/common/js/daumeditor/css/popup.css" type="text/css"  charset="utf-8"/>
 <script type="text/javascript">
-// <![CDATA[
 
 <%
 if (form != null) {
@@ -36,12 +34,12 @@ function done() {
 	
 	var _mockdata = {
 		'filekey': '<%=form.getFilekey()%>',
-		'imageurl': '<%=request.getContextPath()%>/attach.do?command=download&filekey=<%=form.getFilekey()%>',
+		'imageurl': '<%=request.getContextPath()%>/attach.do?command=downloadImage&filekey=<%=form.getFilekey()%>',
 		'filename': '<%=form.getFilename()%>',
 		'filesize': <%=form.getFilesize()%>,
 		'imagealign': 'C',
-		'originalurl': '<%=request.getContextPath()%>/attach.do?command=download&filekey=<%=form.getFilekey()%>',
-		'thumburl': '<%=request.getContextPath()%>/attach.do?command=download&filekey=<%=form.getFilekey()%>'
+		'originalurl': '<%=request.getContextPath()%>/attach.do?command=downloadImage&filekey=<%=form.getFilekey()%>',
+		'thumburl': '<%=request.getContextPath()%>/attach.do?command=downloadImage&filekey=<%=form.getFilekey()%>'
 	};
 	execAttach(_mockdata);
 	closeWindow();
@@ -74,6 +72,7 @@ function initUploader(){
 <form:form commandName="attachVo" id="subForm" name="subForm" method="post" action="${pageContext.request.contextPath}/attach.do" enctype="multipart/form-data">
 <input type="hidden" name="command" value="registDaum"/>
 <input type="hidden" name="dbmode" value="<%=condition.get("dbmode")%>"/>
+<input type="hidden" name="attachType" value="<%=condition.get("attachType")%>"/>
 
 <!-- sub title -->
 <div class="sub_title">
