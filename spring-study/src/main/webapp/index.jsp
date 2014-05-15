@@ -13,6 +13,8 @@ String contextPath = request.getContextPath();
 	<li><a href="<%=contextPath%>/sample/jquery_test.jsp">jquery & ajax 예제</a></li>
 	<li><a href="<%=contextPath%>/code.do?command=viewMsg&bizlocale=ko">messages 사용 예제 (locale:ko)</a></li>
 	<li><a href="<%=contextPath%>/code.do?command=viewMsg&bizlocale=en">messages 사용 예제 (locale:en)</a></li>
+	<li><a href="<%=contextPath%>/editor.do?command=viewList">editor 목록</a></li>
+	<li><a href="<%=contextPath%>/attach.do?command=viewList">attach 목록</a></li>
 </ul>
 </body>
 </html>

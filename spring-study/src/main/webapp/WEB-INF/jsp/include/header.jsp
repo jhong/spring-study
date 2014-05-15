@@ -4,5 +4,4 @@ String contextPath = request.getContextPath();
 %>
 <div class="layout_header">
 <a href="<%=contextPath%>">[HOME]</a>
-code_list.jsp
 </div>

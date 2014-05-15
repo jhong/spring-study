@@ -19,6 +19,7 @@ import net.sf.json.JSONArray;
 import net.study.common.BizCondition;
 import net.study.common.GridResponse;
 import net.study.common.Properties;
+import net.study.util.BizUtil;
 
 import org.dom4j.Document;
 import org.slf4j.Logger;
@@ -216,30 +217,7 @@ public class CodeController {
     	model.addAttribute("condition", condition);
     	
     	List bizList = (List)result.get("bizList");
-    	return makeGridResponseData(bizList, condition); // grid response
-	}
-
-	/**
-	 * <pre>
-	 * Grid Response 생성
-	 * </pre>
-	 * @param bizResult
-	 * @param condition
-	 * @return
-	 * @throws Exception
-	 */
-	GridResponse makeGridResponseData(List bizList, BizCondition condition) throws Exception {
-        // grid response
-        GridResponse response = new GridResponse();
-        if (bizList != null && bizList.size() > 0)
-        	response.setData(bizList);
-        if (condition != null) {
-	        response.setRecords(String.valueOf(condition.getTotalRow())); // total number of records
-	        response.setPage(String.valueOf(condition.getPage())); // page
-	        response.setTotal(String.valueOf(condition.getTotalPage())); // total pages
-        }
-
-        return response;
+    	return BizUtil.makeGridResponseData(bizList, condition); // grid response
 	}
 
 	/**

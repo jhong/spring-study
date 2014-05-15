@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="common_editor">
+
+	<typeAlias alias="bizCondition" type="net.study.common.BizCondition"/>
+	<typeAlias alias="dataObject" type="net.study.common.DataObject"/>
+	<typeAlias alias="editorVo" type="net.study.editor.EditorVo"/>
+
+	<resultMap id="editorVo" class="net.study.editor.EditorVo">
+		<result property="bbskey" column="BBSKEY" />
+		<result property="bbstype" column="BBSTYPE" />
+		<result property="bbscategory" column="BBSCATEGORY" />
+		<result property="priority" column="PRIORITY" />
+		<result property="title" column="TITLE" />
+		<result property="contents" column="CONTENTS" jdbcType="CLOB" javaType="java.lang.String" />
+		<result property="hit" column="HIT" />
+		<result property="groupid" column="GROUPID" />
+		<result property="sortorder" column="SORTORDER" />
+		<result property="replydepth" column="REPLYDEPTH" />
+		<result property="parentkey" column="PARENTKEY" />
+		<result property="status" column="STATUS" />
+		<result property="sitetype" column="SITETYPE" />
+		<result property="housekey" column="HOUSEKEY" />
+		<result property="companykey" column="COMPANYKEY" />
+		<result property="registdate" column="REGISTDATE" />
+		<result property="register" column="REGISTER" />
+		<result property="modifydate" column="MODIFYDATE" />
+		<result property="modifier" column="MODIFIER" />
+	</resultMap>
+
+	<select id="common.editor.selectList" parameterClass="bizCondition" resultClass="dataObject">
+		<![CDATA[
+			SELECT  *
+			  FROM  (
+			SELECT ROWNUM RNUM, ALL_LIST.*
+			  FROM  (
+			/* 구현 Sql */
+			SELECT
+				BBSKEY AS bbskey
+				, BBSTYPE AS bbstype
+				, BBSCATEGORY AS bbscategory
+				, PRIORITY AS priority
+				, TITLE AS title
+				/*, CONTENTS AS contents */
+				, HIT AS hit
+				, GROUPID AS groupid
+				, SORTORDER AS sortorder
+				, REPLYDEPTH AS replydepth
+				, PARENTKEY AS parentkey
+				, STATUS AS status
+				, SITETYPE AS sitetype
+				, HOUSEKEY AS housekey
+				, COMPANYKEY AS companykey
+				, REGISTDATE AS registdate
+				, REGISTER AS register
+				, MODIFYDATE AS modifydate
+				, MODIFIER AS modifier
+			FROM BBS_MANAGE
+		   WHERE 1=1
+		     AND STATUS != 'DELETE'
+		]]>
+			<isNotEmpty prepend="AND" property="searchValue1">
+				$searchType1$ LIKE '%' || #searchValue1# || '%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="searchValue2">
+				$searchType2$ LIKE '%' || #searchValue2# || '%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="searchValue3">
+				$searchType3$ LIKE '%' || #searchValue3# || '%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="searchStatus">
+				STATUS = #searchStatus#
+			</isNotEmpty>
+			<isNotEmpty property="searchDateType">
+				<isNotEmpty property="searchStartDate">
+					<isNotEmpty prepend="AND" property="searchEndDate">
+						$searchDateType$ between #searchStartDate# and #searchEndDate#
+					</isNotEmpty>
+				</isNotEmpty>
+			</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+				<isNotEmpty property="sortType">
+					$sortType$
+					<isNotEmpty property="sortValue">
+						$sortValue$
+					</isNotEmpty>
+				</isNotEmpty>
+				<isEmpty property="sortType">
+					REGISTDATE DESC
+				</isEmpty>
+			</dynamic>
+		<![CDATA[
+			/* 구현 Sql */
+				    ) ALL_LIST
+				    )
+			 WHERE  RNUM  > #firstRowIndex#
+			   AND  RNUM <= #firstRowIndex# + #rowCountPerPage#
+		]]>
+	</select>
+	
+	<select id="common.editor.selectListCount" parameterClass="bizCondition" resultClass="int">
+		<![CDATA[
+			SELECT COUNT(*) totcnt
+			FROM BBS_MANAGE
+		   WHERE 1=1
+		     AND STATUS != 'DELETE'
+		]]>
+			<isNotEmpty prepend="AND" property="searchValue1">
+				$searchType1$ LIKE '%' || #searchValue1# || '%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="searchValue2">
+				$searchType2$ LIKE '%' || #searchValue2# || '%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="searchValue3">
+				$searchType3$ LIKE '%' || #searchValue3# || '%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="searchStatus">
+				STATUS = #searchStatus#
+			</isNotEmpty>
+			<isNotEmpty property="searchDateType">
+				<isNotEmpty property="searchStartDate">
+					<isNotEmpty prepend="AND" property="searchEndDate">
+						$searchDateType$ between #searchStartDate# and #searchEndDate#
+					</isNotEmpty>
+				</isNotEmpty>
+			</isNotEmpty>
+	</select>
+
+	<insert id="common.editor.insert" parameterClass="editorVo">
+		<![CDATA[
+			INSERT INTO BBS_MANAGE (
+				BBSKEY
+				, BBSTYPE
+				, BBSCATEGORY
+				, PRIORITY
+				, TITLE
+				, CONTENTS
+				, HIT
+				, GROUPID
+				, SORTORDER
+				, REPLYDEPTH
+				, PARENTKEY
+				, STATUS
+				, SITETYPE
+				, HOUSEKEY
+				, COMPANYKEY
+				, REGISTDATE
+				, REGISTER
+			) VALUES (
+				#bbskey:VARCHAR:NO_ENTRY#
+				, #bbstype:VARCHAR:NO_ENTRY#
+				, #bbscategory:VARCHAR:NO_ENTRY#
+				, #priority:VARCHAR:NO_ENTRY#
+				, #title:VARCHAR:NO_ENTRY#
+				, #contents:CLOB#
+				, #hit:NUMERIC:-999999#
+				, #groupid:NUMERIC:-999999#
+				, #sortorder:NUMERIC:-999999#
+				, #replydepth:NUMERIC:-999999#
+				, #parentkey:VARCHAR:NO_ENTRY#
+				, #status:VARCHAR:NO_ENTRY#
+				, #sitetype:VARCHAR:NO_ENTRY#
+				, #housekey:VARCHAR:NO_ENTRY#
+				, #companykey:VARCHAR:NO_ENTRY#
+				, SYSDATE
+				, #register:VARCHAR:NO_ENTRY#
+			)
+		]]>
+	</insert>
+	
+	<update id="common.editor.update" parameterClass="editorVo">
+		<![CDATA[
+			UPDATE BBS_MANAGE SET
+				BBSKEY = #bbskey:VARCHAR:NO_ENTRY#
+				, BBSTYPE = #bbstype:VARCHAR:NO_ENTRY#
+				, BBSCATEGORY = #bbscategory:VARCHAR:NO_ENTRY#
+				, PRIORITY = #priority:VARCHAR:NO_ENTRY#
+				, TITLE = #title:VARCHAR:NO_ENTRY#
+				, CONTENTS = #contents:CLOB#
+				, HIT = #hit:NUMERIC:-999999#
+				, GROUPID = #groupid:NUMERIC:-999999#
+				, SORTORDER = #sortorder:NUMERIC:-999999#
+				, REPLYDEPTH = #replydepth:NUMERIC:-999999#
+				, PARENTKEY = #parentkey:VARCHAR:NO_ENTRY#
+				, STATUS = #status:VARCHAR:NO_ENTRY#
+				, SITETYPE = #sitetype:VARCHAR:NO_ENTRY#
+				, HOUSEKEY = #housekey:VARCHAR:NO_ENTRY#
+				, COMPANYKEY = #companykey:VARCHAR:NO_ENTRY#
+				, MODIFYDATE = SYSDATE
+				, MODIFIER = #modifier:VARCHAR:NO_ENTRY#
+		   WHERE BBSKEY = #bbskey#
+		]]>
+	</update>
+	
+	<delete id="common.editor.delete" parameterClass="dataObject">
+		<![CDATA[
+			UPDATE BBS_MANAGE 
+			   SET STATUS = 'DELETE'
+		   WHERE BBSKEY = #bbskey#
+		]]>
+	</delete>
+	
+	<select id="common.editor.selectDetail" resultMap="editorVo">
+		<![CDATA[
+			SELECT
+				BBSKEY
+				, BBSTYPE
+				, BBSCATEGORY
+				, PRIORITY
+				, TITLE
+				, CONTENTS
+				, HIT
+				, GROUPID
+				, SORTORDER
+				, REPLYDEPTH
+				, PARENTKEY
+				, STATUS
+				, SITETYPE
+				, HOUSEKEY
+				, COMPANYKEY
+				, REGISTDATE
+				, REGISTER
+				, MODIFYDATE
+				, MODIFIER
+			FROM BBS_MANAGE 
+		   WHERE BBSKEY = #bbskey# 
+		]]>
+	</select>
+</sqlMap>

@@ -14,12 +14,20 @@
         <put-attribute name="left" value="/WEB-INF/jsp/include/left.jsp" />
         <put-attribute name="content" value="" />
     </definition>
+    
+    <definition name="layouts-blank" template="/WEB-INF/jsp/layout/layouts-tiles-blank.jsp">
+        <put-attribute name="content" value="" />
+    </definition>
 
     <definition name="list/**/*.tiles" extends="layouts-list">
         <put-attribute name="content" value="/WEB-INF/jsp/{1}/{2}.jsp" />
     </definition>
 
     <definition name="edit/**/*.tiles" extends="layouts-edit">
+        <put-attribute name="content" value="/WEB-INF/jsp/{1}/{2}.jsp" />
+    </definition>
+
+    <definition name="blank/**/*.tiles" extends="layouts-blank">
         <put-attribute name="content" value="/WEB-INF/jsp/{1}/{2}.jsp" />
     </definition>
 

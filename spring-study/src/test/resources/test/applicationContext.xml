@@ -10,6 +10,8 @@
 	   		http://www.springframework.org/schema/mvc 
 			http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd">
 
+	<mvc:annotation-driven />
+	
 	<!-- Scans the classpath for annotated components that will be auto-registered as Spring beans.
 	 For example @Controller and @Service. Make sure to set the correct base-package-->
 	<context:component-scan base-package="net.study" />
@@ -71,5 +73,15 @@
 			</bean>
 		</mvc:interceptor>
 	</mvc:interceptors>
+
+
+    <!-- 파일업로드 설정 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    	<property name="maxUploadSize" value="15000000"/>
+    	<property name="uploadTempDir" ref="uploadDirResource"/>
+    </bean>
+    <bean id="uploadDirResource" class="org.springframework.core.io.FileSystemResource">
+    	<constructor-arg value="classpath:../../../repository/temp"/>
+    </bean>
 
 </beans>

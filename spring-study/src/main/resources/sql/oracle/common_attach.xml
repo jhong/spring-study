@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="common_attach">
+
+	<typeAlias alias="bizCondition" type="net.study.common.BizCondition"/>
+	<typeAlias alias="dataObject" type="net.study.common.DataObject"/>
+	<typeAlias alias="attachVo" type="net.study.attach.AttachVo"/>
+
+	<resultMap id="attachVo" class="net.study.attach.AttachVo">
+		<result property="filekey" column="FILEKEY" />
+		<result property="housekey" column="HOUSEKEY" />
+		<result property="companykey" column="COMPANYKEY" />
+		<result property="filename" column="FILENAME" />
+		<result property="mimetype" column="MIMETYPE" />
+		<result property="charset" column="CHARSET" />
+		<result property="filesize" column="FILESIZE" />
+		<result property="uploaddate" column="UPLOADDATE" />
+		<result property="filedesc" column="FILEDESC" />
+		<result property="refNo" column="REF_NO" />
+		<result property="refNo2" column="REF_NO2" />
+		<result property="refNoSeq" column="REF_NO_SEQ" />
+		<result property="userid" column="USERID" />
+	</resultMap>
+
+	<select id="common.attach.selectList" parameterClass="bizCondition" resultClass="dataObject">
+		<![CDATA[
+			SELECT  *
+			  FROM  (
+			SELECT ROWNUM RNUM, ALL_LIST.*
+			  FROM  (
+			/* 구현 Sql */
+			SELECT
+				FILEKEY AS filekey
+				, HOUSEKEY AS housekey
+				, COMPANYKEY AS companykey
+				, FILENAME AS filename
+				, MIMETYPE AS mimetype
+				, CHARSET AS charset
+				, FILESIZE AS filesize
+				, UPLOADDATE AS uploaddate
+				, FILEDESC AS filedesc
+				, REF_NO AS refNo
+				, REF_NO2 AS refNo2
+				, REF_NO_SEQ AS refNoSeq
+				, USERID AS userid
+			FROM ATTACHDOCUMENT
+		   WHERE 1=1
+		]]>
+			<isNotEmpty prepend="AND" property="searchValue1">
+				$searchType1$ LIKE '%' || #searchValue1# || '%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="searchValue2">
+				$searchType2$ LIKE '%' || #searchValue2# || '%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="searchValue3">
+				$searchType3$ LIKE '%' || #searchValue3# || '%'
+			</isNotEmpty>
+			<isNotEmpty property="searchDateType">
+				<isNotEmpty property="searchStartDate">
+					<isNotEmpty prepend="AND" property="searchEndDate">
+						$searchDateType$ between #searchStartDate# and #searchEndDate#
+					</isNotEmpty>
+				</isNotEmpty>
+			</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+				<isNotEmpty property="sortType">
+					$sortType$
+					<isNotEmpty property="sortValue">
+						$sortValue$
+					</isNotEmpty>
+				</isNotEmpty>
+				<isEmpty property="sortType">
+					UPLOADDATE DESC
+				</isEmpty>
+			</dynamic>
+		<![CDATA[
+			/* 구현 Sql */
+				    ) ALL_LIST
+				    )
+			 WHERE  RNUM  > #firstRowIndex#
+			   AND  RNUM <= #firstRowIndex# + #rowCountPerPage#
+		]]>
+	</select>
+	
+	<select id="common.attach.selectListCount" parameterClass="bizCondition" resultClass="int">
+		<![CDATA[
+			SELECT COUNT(*) totcnt
+			FROM ATTACHDOCUMENT
+		   WHERE 1=1
+		]]>
+			<isNotEmpty prepend="AND" property="searchValue1">
+				$searchType1$ LIKE '%' || #searchValue1# || '%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="searchValue2">
+				$searchType2$ LIKE '%' || #searchValue2# || '%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="searchValue3">
+				$searchType3$ LIKE '%' || #searchValue3# || '%'
+			</isNotEmpty>
+			<isNotEmpty property="searchDateType">
+				<isNotEmpty property="searchStartDate">
+					<isNotEmpty prepend="AND" property="searchEndDate">
+						$searchDateType$ between #searchStartDate# and #searchEndDate#
+					</isNotEmpty>
+				</isNotEmpty>
+			</isNotEmpty>
+	</select>
+
+	<insert id="common.attach.insert" parameterClass="attachVo">
+		<![CDATA[
+			INSERT INTO ATTACHDOCUMENT (
+				FILEKEY
+				, HOUSEKEY
+				, COMPANYKEY
+				, FILENAME
+				, MIMETYPE
+				, CHARSET
+				, FILESIZE
+				, UPLOADDATE
+				, FILEDESC
+				, REF_NO
+				, REF_NO2
+				, REF_NO_SEQ
+				, USERID
+			) VALUES (
+				#filekey:VARCHAR:NO_ENTRY#
+				, #housekey:VARCHAR:NO_ENTRY#
+				, #companykey:VARCHAR:NO_ENTRY#
+				, #filename:VARCHAR:NO_ENTRY#
+				, #mimetype:VARCHAR:NO_ENTRY#
+				, #charset:VARCHAR:NO_ENTRY#
+				, #filesize:NUMERIC:-999999#
+				, SYSDATE
+				, #filedesc:VARCHAR:NO_ENTRY#
+				, #refNo:VARCHAR:NO_ENTRY#
+				, #refNo2:VARCHAR:NO_ENTRY#
+				, #refNoSeq:NUMERIC:-999999#
+				, #userid:VARCHAR:NO_ENTRY#
+			)
+		]]>
+	</insert>
+	
+	<update id="common.attach.update" parameterClass="attachVo">
+		<![CDATA[
+			UPDATE ATTACHDOCUMENT SET
+				FILEKEY = #filekey:VARCHAR:NO_ENTRY#
+				, HOUSEKEY = #housekey:VARCHAR:NO_ENTRY#
+				, COMPANYKEY = #companykey:VARCHAR:NO_ENTRY#
+				, FILENAME = #filename:VARCHAR:NO_ENTRY#
+				, MIMETYPE = #mimetype:VARCHAR:NO_ENTRY#
+				, CHARSET = #charset:VARCHAR:NO_ENTRY#
+				, FILESIZE = #filesize:NUMERIC:-999999#
+				, FILEDESC = #filedesc:VARCHAR:NO_ENTRY#
+				, REF_NO = #refNo:VARCHAR:NO_ENTRY#
+				, REF_NO2 = #refNo2:VARCHAR:NO_ENTRY#
+				, REF_NO_SEQ = #refNoSeq:NUMERIC:-999999#
+				, USERID = #userid:VARCHAR:NO_ENTRY#
+		   WHERE FILEKEY = #filekey#
+		]]>
+	</update>
+
+	<update id="common.attach.updateRefNo" parameterClass="dataObject">
+		<![CDATA[
+			UPDATE ATTACHDOCUMENT SET
+				REF_NO = #refNo:VARCHAR:NO_ENTRY#
+				, REF_NO2 = #refNo2:VARCHAR:NO_ENTRY#
+				, REF_NO_SEQ = #refNoSeq:NUMERIC:-999999#
+		   WHERE FILEKEY = #filekey#
+		]]>
+	</update>
+	
+	<delete id="common.attach.delete" parameterClass="dataObject">
+		<![CDATA[
+			DELETE FROM ATTACHDOCUMENT 
+		   WHERE FILEKEY = #filekey#
+		]]>
+	</delete>
+	
+	<select id="common.attach.selectDetail" resultMap="attachVo">
+		<![CDATA[
+			SELECT
+				FILEKEY
+				, HOUSEKEY
+				, COMPANYKEY
+				, FILENAME
+				, MIMETYPE
+				, CHARSET
+				, FILESIZE
+				, UPLOADDATE
+				, FILEDESC
+				, REF_NO
+				, REF_NO2
+				, REF_NO_SEQ
+				, USERID
+			FROM ATTACHDOCUMENT 
+		   WHERE FILEKEY = #filekey# 
+		]]>
+	</select>
+
+	<select id="common.attach.selectList.all" parameterClass="bizCondition" resultClass="dataObject">
+		<![CDATA[
+			SELECT
+				FILEKEY AS filekey
+				, HOUSEKEY AS housekey
+				, COMPANYKEY AS companykey
+				, FILENAME AS filename
+				, MIMETYPE AS mimetype
+				, CHARSET AS charset
+				, FILESIZE AS filesize
+				, UPLOADDATE AS uploaddate
+				, FILEDESC AS filedesc
+				, REF_NO AS refNo
+				, REF_NO2 AS refNo2
+				, REF_NO_SEQ AS refNoSeq
+				, USERID AS userid
+			FROM ATTACHDOCUMENT
+		   WHERE 1=1
+		]]>
+			<isNotEmpty prepend="AND" property="searchValue1">
+				$searchType1$ LIKE '%' || #searchValue1# || '%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="searchValue2">
+				$searchType2$ LIKE '%' || #searchValue2# || '%'
+			</isNotEmpty>
+			<isNotEmpty prepend="AND" property="searchValue3">
+				$searchType3$ LIKE '%' || #searchValue3# || '%'
+			</isNotEmpty>
+			<isNotEmpty property="searchDateType">
+				<isNotEmpty property="searchStartDate">
+					<isNotEmpty prepend="AND" property="searchEndDate">
+						$searchDateType$ between #searchStartDate# and #searchEndDate#
+					</isNotEmpty>
+				</isNotEmpty>
+			</isNotEmpty>
+			<dynamic prepend="ORDER BY">
+				<isNotEmpty property="sortType">
+					$sortType$
+					<isNotEmpty property="sortValue">
+						$sortValue$
+					</isNotEmpty>
+				</isNotEmpty>
+				<isEmpty property="sortType">
+					UPLOADDATE ASC
+				</isEmpty>
+			</dynamic>
+	</select>
+
+</sqlMap>            

@@ -4,5 +4,7 @@
 <sqlMapConfig>
 
     <sqlMap resource="sql/oracle/common_code.xml"/>
+    <sqlMap resource="sql/oracle/common_attach.xml"/>
+	<sqlMap resource="sql/oracle/common_editor.xml"/>
 
 </sqlMapConfig>
