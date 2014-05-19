@@ -147,6 +147,7 @@ public class EditorController {
 		if (StringUtil.isNotEmpty(editorType)) {
 			if ("daumeditor".equals(editorType)) viewName = "edit/editor/editor_edit_daumeditor.tiles";
 			if ("smarteditor".equals(editorType)) viewName = "edit/editor/editor_edit_smarteditor.tiles";
+			if ("ckeditor".equals(editorType)) viewName = "edit/editor/editor_edit_ckeditor.tiles";
 		}
 		return viewName;
 	}
@@ -258,6 +259,7 @@ public class EditorController {
 		
 		BizCondition condition = new BizCondition(request);
 		condition.put("editorType", editorType);
+		condition.put("dbmode", BizConst.CODE_DB_UPDATE); // 수정
 		
 		editorVo = facade.prepareData(editorVo); // validation 전에 수행!!
 
@@ -279,6 +281,7 @@ public class EditorController {
 		if (StringUtil.isNotEmpty(editorType)) {
 			if ("daumeditor".equals(editorType)) viewName = "edit/editor/editor_edit_daumeditor.tiles";
 			if ("smarteditor".equals(editorType)) viewName = "edit/editor/editor_edit_smarteditor.tiles";
+			if ("ckeditor".equals(editorType)) viewName = "edit/editor/editor_edit_ckeditor.tiles";
 		}
 		return viewName;
     }
@@ -345,6 +348,7 @@ public class EditorController {
 		if (StringUtil.isNotEmpty(editorType)) {
 			if ("daumeditor".equals(editorType)) viewName = "edit/editor/editor_edit_daumeditor.tiles";
 			if ("smarteditor".equals(editorType)) viewName = "edit/editor/editor_edit_smarteditor.tiles";
+			if ("ckeditor".equals(editorType)) viewName = "edit/editor/editor_edit_ckeditor.tiles";
 		}
 		return viewName;
 	}

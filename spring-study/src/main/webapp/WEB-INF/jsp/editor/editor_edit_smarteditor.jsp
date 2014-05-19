@@ -34,22 +34,6 @@ function doRegist() {
 	
 	submitContents(this);
 	
-	/*
-	form.contents.value = Editor.getContent();
-
-	// 첨부파일
-	var attachArr = [];
-	Editor.getAttachBox().datalist.each(function(elmt){
-		var attach = {
-			"filekey": elmt.data.filekey,
-			"deletedMark": elmt.deletedMark
-		};
-		attachArr.push(attach);
-	});
-	form.attachstr.value = JSON.stringify(attachArr);
-	console.log("attachstr="+form.attachstr.value);
-	*/
-	
 	form.submit();
 }
 

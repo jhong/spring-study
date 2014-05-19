@@ -35,7 +35,8 @@ $(function(){
 //    	searchType3 : function() { return $("[name=searchType3]").val(); },
 //    	searchValue3 : function() { return $("[name=searchValue3]").val(); }
     },	    
-    colNames:['BBSKEY', 'BBSTYPE', 'BBSCATEGORY', 'PRIORITY', 'TITLE', '다음에디터', '스마트에디터', 'CONTENTS', 'HIT'
+    colNames:['BBSKEY', 'BBSTYPE', 'BBSCATEGORY', 'PRIORITY', 'TITLE'
+            , '다음에디터', '스마트에디터', 'CKEditor', 'CONTENTS', 'HIT'
 			, 'GROUPID', 'SORTORDER', 'REPLYDEPTH', 'PARENTKEY', 'STATUS', 'SITETYPE', 'HOUSEKEY'
 			, 'COMPANYKEY'],
     colModel :[ 
@@ -46,6 +47,7 @@ $(function(){
 		{name:"title", index:"title", width:220, formatter:viewFormatter},
 		{name:"link_daumeditor", index:"", width:70, formatter:daumeditorFormatter},
 		{name:"link_smarteditor", index:"", width:70, formatter:smarteditorFormatter},
+		{name:"link_ckeditor", index:"", width:50, formatter:ckeditorFormatter},
 		{name:"contents", index:"contents", width:-1},
 		{name:"hit", index:"hit", width:25, align:"right"},
 
@@ -105,9 +107,15 @@ function daumeditorFormatter(cellvalue, options, rowObject) {
 	return linkStr;
 }
 
-//수정페이지 이동 formatter (smarteditor 사용)
+// 수정페이지 이동 formatter (smarteditor 사용)
 function smarteditorFormatter(cellvalue, options, rowObject) {
 	var linkStr = "<a href=\"editor.do?command=findDetail&selected_key="+rowObject.bbskey+"&editorType=smarteditor\">GO</a>";
+	return linkStr;
+}
+
+// 수정페이지 이동 formatter (ckeditor 사용)
+function ckeditorFormatter(cellvalue, options, rowObject) {
+	var linkStr = "<a href=\"editor.do?command=findDetail&selected_key="+rowObject.bbskey+"&editorType=ckeditor\">GO</a>";
 	return linkStr;
 }
 
@@ -135,6 +143,7 @@ $(document).ready(function(){
 	<a href="<c:url value='editor.do?command=entry'/>">[등록]</a>
 	<a href="<c:url value='editor.do?command=entry&editorType=daumeditor'/>">[등록 (daumeditor)]</a>
 	<a href="<c:url value='editor.do?command=entry&editorType=smarteditor'/>">[등록 (smarteditor)]</a>
+	<a href="<c:url value='editor.do?command=entry&editorType=ckeditor'/>">[등록 (ckeditor)]</a>
 </div>
 
 <div class="gy_box">

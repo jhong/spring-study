@@ -62,4 +62,5 @@ if ((oParameter.errstr || '').length) { // on error
 </script>
 </head>
 <body>
+</body>
 </html>

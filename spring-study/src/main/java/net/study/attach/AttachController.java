@@ -365,6 +365,73 @@ public class AttachController {
 
 	/**
 	 * <pre>
+	 * 첨부파일 등록 (CKEditor 등록시 사용)
+ 	 * </pre>
+	 *
+	 * @param request
+	 * @param attachVo
+	 * @param bindingResult
+	 * @return 
+	 * @throws Exception
+	 */
+    @RequestMapping(params="command=registCk")
+	public String registCk (
+			HttpServletRequest request
+			, @ModelAttribute("attachVo") AttachVo attachVo
+			, BindingResult bindingResult 
+			, ModelMap model
+ 			, @RequestParam(value="CKEditorFuncNum",required=false) String funcNum
+			) throws Exception {    
+
+		BizCondition condition = new BizCondition(request);
+		condition.put("funcNum", funcNum);
+		logger.info("registCk() funcNum={}", funcNum);
+		
+		attachVo = facade.prepareData(attachVo); // validation 전에 수행!!
+		
+		// 정보 등록
+		MultipartHttpServletRequest multiPart = (MultipartHttpServletRequest)request;
+		Iterator itr = multiPart.getFileNames();
+
+		BizResult bizResult = new BizResult();
+		while (itr.hasNext()) {
+			MultipartFile formFile = multiPart.getFile((String)itr.next());
+			if (formFile.getSize() > 0) {
+				AttachVo file = new AttachVo();
+				
+				// 화면에서 filekey 넘어오면 그대로 사용하도록 수정 by jhong (2013.04.22) - TODO: filekey 중복 체크...
+				if (StringUtil.isNotEmpty(request.getParameter("filekey")))
+					file.setFilekey(request.getParameter("filekey"));
+				else
+					file.setFilekey(UUID.randomUUID().toString());
+				
+				file.setFilename(formFile.getOriginalFilename());
+				file.setMimetype(formFile.getContentType());
+				file.setFilesize(new BigDecimal(formFile.getSize()));
+				file.setFiledesc(request.getParameter("filedesc"));
+
+				// 파일저장
+				this.facade.uploadFile(formFile, file);
+
+				// 파일첨부정보 등록
+				bizResult = facade.regist(file, condition);
+
+				condition.setString("filekey", file.getFilekey());
+			}
+		}
+
+
+		model.addAttribute("bizMessage", bizResult.getMessage());
+		model.addAttribute("bizMessageCode", bizResult.getMessageCode());
+
+		model.addAttribute("condition", condition); // 검색조건 유지
+		model.addAttribute("attachVo", bizResult.getBizData());
+		
+		return  "blank/editor/ckeditor_image_callback.tiles";
+    }
+
+	/**
+	 * <pre>
 	 * 첨부파일 수정
  	 * </pre>
 	 *
