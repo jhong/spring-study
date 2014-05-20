@@ -72,20 +72,21 @@ $(function(){
 //    	searchType3 : function() { return $("[name=searchType3]").val(); },
 //    	searchValue3 : function() { return $("[name=searchValue3]").val(); }
     },	    
-    colNames:['FILEKEY', 'HOUSEKEY', 'COMPANYKEY', 'FILENAME', 'MIMETYPE', 'CHARSET', 'FILESIZE'
+    colNames:['FILEKEY', 'HOUSEKEY', 'COMPANYKEY', 'FILENAME', 'URL', 'MIMETYPE', 'CHARSET', 'FILESIZE'
 			, 'UPLOADDATE', 'FILEDESC', 'REF_NO', 'REF_NO2', 'REF_NO_SEQ', 'USERID'],
     colModel :[ 
 		{name:"filekey", index:"filekey", width:128},
-		{name:"housekey", index:"housekey", width:30},
-		{name:"companykey", index:"companykey", width:30},
-		{name:"filename", index:"filename", width:170, formatter:viewFormatter},
-		{name:"mimetype", index:"mimetype", width:120},
-		{name:"charset", index:"charset", width:35},
-		{name:"filesize", index:"filesize", width:85, align:"right"},
+		{name:"housekey", index:"housekey", width:20},
+		{name:"companykey", index:"companykey", width:20},
+		{name:"filename", index:"filename", width:120, formatter:viewFormatter},
+		{name:"url", index:"", width:540, formatter:urlFormatter},
+		{name:"mimetype", index:"mimetype", width:100},
+		{name:"charset", index:"charset", width:25},
+		{name:"filesize", index:"filesize", width:55, align:"right"},
 
 		{name:"uploaddate", index:"uploaddate", width:80},
-		{name:"filedesc", index:"filedesc", width:50},
-		{name:"refno", index:"refno", width:120},
+		{name:"filedesc", index:"filedesc", width:20},
+		{name:"refno", index:"refno", width:70},
 		{name:"refno2", index:"refno2", width:30},
 		{name:"refnoseq", index:"refnoseq", width:30, align:"right"},
 		{name:"userid", index:"userid", width:35} 
@@ -130,14 +131,12 @@ function viewFormatter(cellvalue, options, rowObject) {
 	return linkStr;
 }
 
-// 개설금액 formatter
-function issueamtFormatter(cellvalue, options, rowObject) {
-	var str = "";
-	if (cellvalue != null){ 
-		str = rowObject.issuecurrency+" "+gridNumFormatter(cellvalue);
-	}
+// url formatter
+function urlFormatter(cellvalue, options, rowObject) {
+	var str = "<c:url value='/'/>attach.do?command=downloadImage&filekey="+rowObject.filekey;
 	return str;
 }
+
 
 /*
  * 엑셀 다운로드

@@ -36,7 +36,7 @@ $(function(){
 //    	searchValue3 : function() { return $("[name=searchValue3]").val(); }
     },	    
     colNames:['BBSKEY', 'BBSTYPE', 'BBSCATEGORY', 'PRIORITY', 'TITLE'
-            , '다음에디터', '스마트에디터', 'CKEditor', 'CONTENTS', 'HIT'
+            , '다음에디터', '스마트에디터', 'CKEditor', 'htmlArea', 'CONTENTS', 'HIT'
 			, 'GROUPID', 'SORTORDER', 'REPLYDEPTH', 'PARENTKEY', 'STATUS', 'SITETYPE', 'HOUSEKEY'
 			, 'COMPANYKEY'],
     colModel :[ 
@@ -48,6 +48,7 @@ $(function(){
 		{name:"link_daumeditor", index:"", width:70, formatter:daumeditorFormatter},
 		{name:"link_smarteditor", index:"", width:70, formatter:smarteditorFormatter},
 		{name:"link_ckeditor", index:"", width:50, formatter:ckeditorFormatter},
+		{name:"link_htmlarea", index:"", width:50, formatter:htmlareaFormatter},
 		{name:"contents", index:"contents", width:-1},
 		{name:"hit", index:"hit", width:25, align:"right"},
 
@@ -119,6 +120,12 @@ function ckeditorFormatter(cellvalue, options, rowObject) {
 	return linkStr;
 }
 
+// 수정페이지 이동 formatter (htmlarea 사용)
+function htmlareaFormatter(cellvalue, options, rowObject) {
+	var linkStr = "<a href=\"editor.do?command=findDetail&selected_key="+rowObject.bbskey+"&editorType=htmlarea\">GO</a>";
+	return linkStr;
+}
+
 /*
  * onload시 실행
  */
@@ -144,6 +151,7 @@ $(document).ready(function(){
 	<a href="<c:url value='editor.do?command=entry&editorType=daumeditor'/>">[등록 (daumeditor)]</a>
 	<a href="<c:url value='editor.do?command=entry&editorType=smarteditor'/>">[등록 (smarteditor)]</a>
 	<a href="<c:url value='editor.do?command=entry&editorType=ckeditor'/>">[등록 (ckeditor)]</a>
+	<a href="<c:url value='editor.do?command=entry&editorType=htmlarea'/>">[등록 (htmlarea)]</a>
 </div>
 
 <div class="gy_box">

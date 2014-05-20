@@ -148,6 +148,7 @@ public class EditorController {
 			if ("daumeditor".equals(editorType)) viewName = "edit/editor/editor_edit_daumeditor.tiles";
 			if ("smarteditor".equals(editorType)) viewName = "edit/editor/editor_edit_smarteditor.tiles";
 			if ("ckeditor".equals(editorType)) viewName = "edit/editor/editor_edit_ckeditor.tiles";
+			if ("htmlarea".equals(editorType)) viewName = "edit/editor/editor_edit_htmlarea.tiles";
 		}
 		return viewName;
 	}
@@ -282,6 +283,7 @@ public class EditorController {
 			if ("daumeditor".equals(editorType)) viewName = "edit/editor/editor_edit_daumeditor.tiles";
 			if ("smarteditor".equals(editorType)) viewName = "edit/editor/editor_edit_smarteditor.tiles";
 			if ("ckeditor".equals(editorType)) viewName = "edit/editor/editor_edit_ckeditor.tiles";
+			if ("htmlarea".equals(editorType)) viewName = "edit/editor/editor_edit_htmlarea.tiles";
 		}
 		return viewName;
     }
@@ -349,6 +351,7 @@ public class EditorController {
 			if ("daumeditor".equals(editorType)) viewName = "edit/editor/editor_edit_daumeditor.tiles";
 			if ("smarteditor".equals(editorType)) viewName = "edit/editor/editor_edit_smarteditor.tiles";
 			if ("ckeditor".equals(editorType)) viewName = "edit/editor/editor_edit_ckeditor.tiles";
+			if ("htmlarea".equals(editorType)) viewName = "edit/editor/editor_edit_htmlarea.tiles";
 		}
 		return viewName;
 	}
