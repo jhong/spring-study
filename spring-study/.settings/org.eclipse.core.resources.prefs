@@ -4,4 +4,6 @@ encoding//src/main/resources/messages/common_en.properties=UTF-8
 encoding//src/main/resources/messages/common_ko.properties=UTF-8
 encoding//src/main/webapp/WEB-INF/jsp/common/print_body.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/xsl/CODE.xsl=UTF-8
+encoding//src/main/webapp/app/views/partials/attach/attach_edit.html=UTF-8
+encoding//src/main/webapp/app/views/partials/attach/attach_list.html=UTF-8
 encoding/<project>=UTF-8

@@ -14,7 +14,8 @@ String contextPath = request.getContextPath();
 	<li><a href="<%=contextPath%>/code.do?command=viewMsg&bizlocale=ko">messages 사용 예제 (locale:ko)</a></li>
 	<li><a href="<%=contextPath%>/code.do?command=viewMsg&bizlocale=en">messages 사용 예제 (locale:en)</a></li>
 	<li><a href="<%=contextPath%>/editor.do?command=viewList">editor 목록</a></li>
-	<li><a href="<%=contextPath%>/attach.do?command=viewList">attach 목록</a></li>
+	<li><a href="<%=contextPath%>/attach.do?command=viewList">attach 목록 (jqGrid 사용)</a></li>
+	<li><a href="<%=contextPath%>/rst/attaches/">attach 목록 (angularjs 사용)</a></li>
 </ul>
 </body>
 </html>

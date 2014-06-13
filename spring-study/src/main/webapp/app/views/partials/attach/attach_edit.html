@@ -1,0 +1,60 @@
+
+<div class="layout_2">
+<div class="content">
+
+<div data-ng-controller="AttachEditCtrl">
+
+<div class="btn_container">
+	<input type="button" value="등록" data-ng-click="doRegist();" data-ng-show="attachVo.filekey === undefined"/>
+	<input type="button" value="수정" data-ng-click="doModify();" data-ng-hide="attachVo.filekey === undefined"/>
+	<input type="button" value="삭제" data-ng-click="doDelete();" data-ng-hide="attachVo.filekey === undefined"/>
+	<input type="button" value="목록으로" data-ng-click="goList();"/>
+</div>
+
+<form id="subForm" name="subForm" method="post" action="#/rst/attaches" enctype="multipart/form-data">
+<input type="hidden" name="command" />
+<input type="hidden" name="dbmode" value=""/>
+<input type="hidden" data-ng-model="attachVo.filekey" />
+
+<!-- sub title -->
+<div class="sub_title">
+	<h2>첨부파일</h2>
+</div>
+<!--// sub title-->
+<div class="bd_wrap">
+	<table class="view" summary="">
+	    <caption></caption>
+		<colgroup>
+			<col width="18%"/>
+			<col width="82%"/>
+		</colgroup>
+		<tbody>
+		<tr>
+			<th scope="row" class="ln_r lft"><label for="file">파일</label></th>
+			<td class="lft">
+				<div class="errdv1_l">
+					<input type="file" data-ng-model="attachVo.file" class="type_text" size="60" onchange="angular.element(this).scope().setTitle(this)" />
+				</div>
+				<div class="errdv1_r">
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row" class="ln_r lft"><label for="filename">FILENAME</label></th>
+			<td class="lft">
+				<div class="errdv1_l">
+					<input data-ng-model="attachVo.filename" id="filename" class="type_text" size="20" maxlength="128"/>
+				</div>
+				<div class="errdv1_r">
+				</div>
+			</td>
+		</tr>
+		</tbody>
+	</table>
+</div>
+
+</form>
+</div>
+
+</div><!-- // content -->
+</div><!-- // layout_2 -->

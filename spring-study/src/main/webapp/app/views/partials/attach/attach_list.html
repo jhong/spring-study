@@ -1,0 +1,66 @@
+<div class="layout_2">
+<div class="content">
+
+<div data-ng-controller="AttachListCtrl">
+
+<div class="btn_container">
+	<a href="#/rst/attaches/new">[등록]</a>
+	<input type="button" value="삭제" data-ng-click="doDeleteChecked();"/>
+</div>
+
+<form id="listForm" name="listForm" method="post" action="/attaches">
+<input type="hidden" name="command"/>
+<input type="hidden" name="selected_key" value="${condition.selected_key}"/>
+<input type="hidden" name="page" value="${condition.page}"/>
+<input type="hidden" name="rowCountPerPage" value="${condition.rowCountPerPage}"/>
+</form>
+
+	<ul>
+		<li>result.page : {{result.page}}</li>
+		<li>result.total : {{result.total}}</li>
+		<li>result.records : {{result.records}}</li>
+		<li>result.msg : {{result.msg}}</li>
+	</ul>
+	<table class="view">
+		<thead>
+		<tr>
+			<th><input type="checkbox"/></th>
+			<th>filename</th>
+			<th>mimetype</th>
+			<th>filesize</th>
+			<th>uploaddate</th>
+			<th>filekey</th>
+			<th>refno</th>
+			<th>삭제</th>
+		</tr>
+		</thead>
+		<tbody data-ng-repeat="data in result.data">
+		<tr>
+			<td><input type="checkbox" data-ng-model="data.checked"/>{{data.checked}}</td>
+			<td><a href="#/rst/attaches/{{data.filekey}}">{{data.filename}}</a></td>
+			<td>{{data.mimetype}}</td>
+			<td>{{data.filesize}}</td>
+			<td>{{data.uploaddate}}</td>
+			<td>{{data.filekey}}</td>
+			<td>{{data.refno}}</td>
+			<td><input type="checkbox" data-ng-click="doDelete(data.filekey)"/></td>
+		</tr>
+		</tbody>
+	</table>
+</div>
+
+</div><!-- // content -->
+</div><!-- // layout_2 -->
+
+<script type="text/javascript">
+<!--
+/*
+function AttachCtrl($scope, $http) {
+	$http.get("<%=request.getContextPath()%>/attachAng.do?command=findList").
+		success(function(data) {
+			$scope.result = data;
+		});
+}
+*/
+//-->
+</script>
