@@ -45,14 +45,14 @@
 	<!-- view resolver (full path) -->
 	<bean id="viewResolverFull" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
  		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
-		<property name="order" value="2"/>
+		<property name="order" value="3"/>
 	</bean>
 
 	<!-- view resolver -->
  	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/jsp/"/>
 		<property name="suffix" value=".jsp"/>
-		<property name="order" value="3"/>
+		<property name="order" value="2"/>
 	</bean>
 
     <!-- 파일업로드 설정 -->
